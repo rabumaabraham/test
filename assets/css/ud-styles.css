@@ -934,6 +934,7 @@ p {
   overflow: hidden;
   cursor: pointer;
   height: 100%;
+  min-height: 320px;
   display: flex;
   flex-direction: column;
   position: relative;
@@ -952,12 +953,29 @@ p {
   z-index: 1;
 }
 
-.ud-feature-modern-card:hover {
-  transform: translateY(-6px) scale(1.01);
-  box-shadow: 0 20px 60px rgba(48, 86, 211, 0.15);
-  border-color: #3056d3;
-  background: linear-gradient(135deg, #ffffff 0%, #f1f5f9 100%);
-}
+  .ud-feature-modern-card:hover {
+    transform: translateY(-6px) scale(1.01);
+    box-shadow: 0 20px 60px rgba(48, 86, 211, 0.15);
+    border-color: #3056d3;
+    background: linear-gradient(135deg, #ffffff 0%, #f1f5f9 100%);
+  }
+  
+  /* Ensure cards are fully responsive */
+  .ud-feature-modern-card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+  
+  .card-visual-section {
+    flex-shrink: 0;
+  }
+  
+  .card-content-section {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
 
 .ud-feature-modern-card:hover::before {
   left: 100%;
@@ -987,8 +1005,10 @@ p {
   justify-content: center;
   align-items: center;
   min-height: 160px;
+  height: 160px;
   position: relative;
   z-index: 2;
+  flex-shrink: 0;
 }
 
 .card-content-section {
@@ -998,6 +1018,10 @@ p {
   position: relative;
   z-index: 2;
   backdrop-filter: blur(5px);
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
 }
 
 .step-indicator {
@@ -1073,6 +1097,7 @@ p {
   width: 100%;
   max-width: 240px;
   height: 150px;
+  min-height: 150px;
   position: relative;
   box-shadow: 0 6px 24px rgba(48, 86, 211, 0.1);
   border: 1px solid rgba(48, 86, 211, 0.1);
@@ -1200,6 +1225,7 @@ p {
   width: 100%;
   max-width: 240px;
   height: 150px;
+  min-height: 150px;
   box-shadow: 0 6px 24px rgba(48, 86, 211, 0.1);
   border: 1px solid rgba(48, 86, 211, 0.1);
   transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
@@ -1271,8 +1297,11 @@ p {
 
 .chart-container {
   position: relative;
-  height: 120px;
+  height: auto;
+  min-height: 120px;
   flex: 1;
+  overflow: hidden;
+  flex-shrink: 0;
 }
 
 .chart-y-axis {
@@ -1286,6 +1315,7 @@ p {
   font-size: 10px;
   color: var(--body-color);
   width: 25px;
+  min-height: 120px;
 }
 
 .chart-y-axis span {
@@ -1298,6 +1328,7 @@ p {
   top: 0;
   width: calc(100% - 30px);
   height: 100%;
+  min-height: 120px;
   transition: all 0.3s ease;
 }
 
@@ -1333,6 +1364,7 @@ p {
   justify-content: space-between;
   font-size: 10px;
   color: var(--body-color);
+  min-height: 20px;
 }
 
 .chart-x-axis span {
@@ -1346,6 +1378,7 @@ p {
   width: 100%;
   max-width: 240px;
   height: 150px;
+  min-height: 150px;
   box-shadow: 0 6px 24px rgba(48, 86, 211, 0.1);
   border: 1px solid rgba(48, 86, 211, 0.1);
   transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
@@ -1424,6 +1457,10 @@ p {
   align-items: center;
   gap: 15px;
   margin-top: auto;
+  overflow: hidden;
+  flex-shrink: 0;
+  height: auto;
+  min-height: 40px;
 }
 
 .progress-bar {
@@ -1520,26 +1557,40 @@ p {
 
 @media (max-width: 767px) {
   .ud-feature-modern-card {
-    margin: 0 8px 20px 8px;
+    margin: 0 5px 15px 5px;
     border-radius: 16px;
+    height: auto;
+    min-height: 320px;
+    max-height: none;
   }
   
   .ud-feature-card,
   .ud-feature-chart,
   .ud-feature-progress {
-    max-width: 240px;
-    height: 140px;
+    max-width: 100%;
+    width: 100%;
+    height: auto;
+    min-height: 150px;
+    max-height: none;
     padding: 16px;
     border-radius: 12px;
   }
   
   .card-visual-section {
-    min-height: 150px;
-    padding: 16px 14px;
+    height: auto;
+    min-height: 160px;
+    max-height: none;
+    padding: 16px 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
   }
   
   .card-content-section {
-    padding: 18px 14px 16px 14px;
+    padding: 16px 12px 14px 12px;
+    flex: 1;
+    min-height: 120px;
   }
   
   .step-indicator {
@@ -1584,29 +1635,42 @@ p {
 
 @media (max-width: 575px) {
   .ud-feature-modern-card {
-    margin: 0 10px 20px 10px;
-    border-radius: 14px;
-    box-shadow: 0 4px 16px rgba(48, 86, 211, 0.08);
+    margin: 0 3px 12px 3px;
+    border-radius: 12px;
+    box-shadow: 0 3px 12px rgba(48, 86, 211, 0.08);
     border: 1px solid rgba(48, 86, 211, 0.08);
+    height: auto;
+    min-height: 300px;
+    max-height: none;
   }
   
   .ud-feature-card,
   .ud-feature-chart,
   .ud-feature-progress {
     max-width: 100%;
-    height: 120px;
-    padding: 14px;
+    width: 100%;
+    height: auto;
+    min-height: 120px;
+    max-height: none;
+    padding: 12px;
     border-radius: 10px;
   }
   
   .card-visual-section {
-    min-height: 130px;
-    padding: 14px 12px;
+    height: auto;
+    min-height: 140px;
+    max-height: none;
+    padding: 12px 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
   }
   
   .card-content-section {
     padding: 16px 12px 14px 12px;
     background: linear-gradient(135deg, rgba(48, 86, 211, 0.03) 0%, rgba(48, 86, 211, 0.06) 100%);
+    min-height: 100px;
   }
   
   .card-balance {
@@ -1620,7 +1684,30 @@ p {
   }
   
   .chart-container {
-    height: 90px;
+    height: auto;
+    min-height: 120px;
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+  
+  .chart-y-axis {
+    min-height: 120px;
+  }
+  
+  .chart-graph {
+    min-height: 120px;
+  }
+  
+  .progress-bar-container {
+    min-height: 40px;
+  }
+  
+  .chart-graph svg {
+    width: 100% !important;
+    height: auto !important;
+    max-width: 100%;
   }
   
   .step-indicator {

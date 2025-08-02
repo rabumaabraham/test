@@ -559,6 +559,11 @@ p {
     font-size: 16px;
     line-height: 30px;
   }
+  
+
+}
+
+@media (max-width: 575px) {
 }
 
 .ud-hero-buttons {
@@ -611,6 +616,8 @@ p {
   text-align: center;
   margin-bottom: 40px;
 }
+
+
 
 .ud-hero-brands-wrapper img {
   -webkit-transition: all 0.3s;

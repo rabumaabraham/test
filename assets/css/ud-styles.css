@@ -2518,9 +2518,21 @@ p {
 .ud-faq {
   padding-top: 120px;
   padding-bottom: 90px;
-  background: #f3f4fe;
+  background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
   position: relative;
   z-index: 1;
+  overflow: hidden;
+}
+
+.ud-faq::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(48, 86, 211, 0.02) 0%, rgba(48, 86, 211, 0.05) 100%);
+  z-index: -1;
 }
 
 @media (max-width: 767px) {
@@ -2538,30 +2550,60 @@ p {
 }
 
 .ud-single-faq {
-  background: var(--white);
-  border: 1px solid #f3f4fe;
-  -webkit-box-shadow: 0px 20px 95px rgba(201, 203, 204, 0.3);
-          box-shadow: 0px 20px 95px rgba(201, 203, 204, 0.3);
-  border-radius: 10px;
-  margin-bottom: 30px;
+  background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+  border: 1px solid rgba(48, 86, 211, 0.08);
+  box-shadow: 0 8px 32px rgba(48, 86, 211, 0.08);
+  border-radius: 16px;
+  margin-bottom: 24px;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(10px);
+}
+
+.ud-single-faq::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #3056d3, #4f46e5);
+  transform: scaleX(0);
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 1;
+}
+
+.ud-single-faq:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 48px rgba(48, 86, 211, 0.12);
+  border-color: rgba(48, 86, 211, 0.15);
+}
+
+.ud-single-faq:hover::before {
+  transform: scaleX(1);
 }
 
 .ud-single-faq .ud-faq-btn {
   text-align: left;
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
   width: 100%;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  align-items: center;
   border: none;
   background: transparent;
   font-weight: 600;
-  font-size: 18px;
+  font-size: 16px;
   color: var(--heading-color);
-  opacity: 0.88;
-  padding: 30px;
+  opacity: 0.9;
+  padding: 24px 28px;
+  transition: all 0.3s ease;
+  position: relative;
+  z-index: 2;
+}
+
+.ud-single-faq .ud-faq-btn:hover {
+  color: var(--primary-color);
+  opacity: 1;
 }
 
 @media only screen and (min-width: 992px) and (max-width: 1199px), (max-width: 767px) {
@@ -2576,21 +2618,39 @@ p {
 }
 
 .ud-single-faq .ud-faq-btn span.icon {
-  display: -webkit-box;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  width: 42px;
-  height: 42px;
-  background: rgba(48, 86, 211, 0.06);
-  border-radius: 10px;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  background: linear-gradient(135deg, rgba(48, 86, 211, 0.08) 0%, rgba(48, 86, 211, 0.12) 100%);
+  border-radius: 12px;
   color: var(--primary-color);
-  margin-right: 24px;
+  margin-right: 20px;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.ud-single-faq .ud-faq-btn span.icon::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(48, 86, 211, 0.1) 0%, rgba(48, 86, 211, 0.15) 100%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.ud-single-faq:hover .ud-faq-btn span.icon {
+  background: linear-gradient(135deg, rgba(48, 86, 211, 0.12) 0%, rgba(48, 86, 211, 0.18) 100%);
+  transform: scale(1.05);
+}
+
+.ud-single-faq:hover .ud-faq-btn span.icon::before {
+  opacity: 1;
 }
 
 .ud-single-faq .ud-faq-btn span.icon i {
@@ -2603,12 +2663,38 @@ p {
 }
 
 .ud-single-faq .ud-faq-body {
-  padding: 0px 30px 40px 95px;
+  padding: 20px 28px 24px;
+  color: #64748b;
+  line-height: 1.7;
+  font-size: 15px;
+  background: linear-gradient(135deg, rgba(48, 86, 211, 0.02) 0%, rgba(48, 86, 211, 0.04) 100%);
+  margin: 0 28px 24px;
+  border-radius: 12px;
+  border-left: 3px solid rgba(48, 86, 211, 0.1);
+  transition: all 0.3s ease;
+}
+
+.ud-single-faq:hover .ud-faq-body {
+  background: linear-gradient(135deg, rgba(48, 86, 211, 0.04) 0%, rgba(48, 86, 211, 0.06) 100%);
+  border-left-color: rgba(48, 86, 211, 0.2);
 }
 
 @media only screen and (min-width: 992px) and (max-width: 1199px), (max-width: 767px) {
   .ud-single-faq .ud-faq-body {
-    padding: 0px 16px 20px 82px;
+    padding: 16px 20px 20px;
+    margin: 0 20px 20px;
+    font-size: 14px;
+  }
+  
+  .ud-single-faq .ud-faq-btn {
+    padding: 20px 24px;
+    font-size: 15px;
+  }
+  
+  .ud-single-faq .ud-faq-btn span.icon {
+    width: 34px;
+    height: 34px;
+    margin-right: 16px;
   }
 }
 

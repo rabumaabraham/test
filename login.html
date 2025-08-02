@@ -86,7 +86,7 @@
         <div class="row">
           <div class="col-lg-12">
             <div class="ud-banner-content">
-              <h1>Login Page</h1>
+              <h1><i class="lni lni-user" style="color: #3056d3; margin-right: 0.5rem;"></i>Login Page</h1>
             </div>
           </div>
         </div>
@@ -103,7 +103,7 @@
               <div class="ud-login-logo">
                 <img src="assets/images/logo/logo-2.svg" alt="logo" />
               </div>
-              <form class="ud-login-form">
+              <form class="ud-login-form" onsubmit="handleLogin(event)">
                 <div class="ud-form-group">
                   <input
                     type="email"
@@ -403,5 +403,14 @@
     <script src="assets/js/bootstrap.bundle.min.js"></script>
     <script src="assets/js/wow.min.js"></script>
     <script src="assets/js/main.js"></script>
+    
+    <script>
+      function handleLogin(event) {
+        event.preventDefault();
+        // In a real app, you would validate credentials here
+        // For demo purposes, redirect to dashboard
+        window.location.href = 'dashboard.html';
+      }
+    </script>
   </body>
 </html>

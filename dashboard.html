@@ -1,0 +1,1658 @@
+<!-- =========
+
+	Template Name: Play
+	Author: UIdeck
+	Author URI: https://uideck.com/
+	Support: https://uideck.com/support/
+	Version: 1.1
+
+========== -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard | B PLAY - AI Powered Personal Finance Tracker</title>
+
+    <!--====== Favicon Icon ======-->
+    <link
+      rel="shortcut icon"
+      href="assets/images/favicon.svg"
+      type="image/svg"
+    />
+
+    <!-- ===== All CSS files ===== -->
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="assets/css/animate.css" />
+    <link rel="stylesheet" href="assets/css/lineicons.css" />
+    <link rel="stylesheet" href="assets/css/ud-styles.css" />
+    
+    <style>
+      /* Dashboard Specific Styles */
+      .dashboard-sidebar {
+        background: linear-gradient(135deg, #3056d3 0%, #13c296 100%);
+        min-height: 100vh;
+        padding: 2rem 0;
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: 280px;
+        z-index: 1000;
+        transition: transform 0.3s ease;
+      }
+      
+      .dashboard-main {
+        margin-left: 280px;
+        padding: 2rem;
+        background: #f8f9fa;
+        min-height: 100vh;
+        transition: margin-left 0.3s ease;
+      }
+      
+      /* Mobile Sidebar Toggle */
+      .sidebar-toggle {
+        display: none;
+        position: fixed;
+        top: 1rem;
+        left: 1rem;
+        z-index: 1001;
+        background: linear-gradient(135deg, #3056d3, #13c296);
+        border: none;
+        color: white;
+        padding: 0.75rem;
+        border-radius: 8px;
+        cursor: pointer;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+      }
+      
+      .sidebar-toggle .toggler-icon {
+        width: 20px;
+        height: 2px;
+        background-color: white;
+        display: block;
+        margin: 4px 0;
+        transition: all 0.3s ease;
+      }
+      
+      .sidebar-toggle.active .toggler-icon:nth-of-type(1) {
+        transform: rotate(45deg) translate(5px, 5px);
+      }
+      
+      .sidebar-toggle.active .toggler-icon:nth-of-type(2) {
+        opacity: 0;
+      }
+      
+      .sidebar-toggle.active .toggler-icon:nth-of-type(3) {
+        transform: rotate(-45deg) translate(7px, -6px);
+      }
+      
+      /* Mobile Responsive Styles */
+      @media (max-width: 991px) {
+        .dashboard-sidebar {
+          transform: translateX(-100%);
+          box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+        }
+        
+        .dashboard-sidebar.show {
+          transform: translateX(0);
+        }
+        
+        .dashboard-main {
+          margin-left: 0;
+          padding: 1rem;
+          padding-top: 5rem;
+        }
+        
+        .sidebar-toggle {
+          display: block;
+        }
+        
+        /* Overlay when sidebar is open */
+        .sidebar-overlay {
+          display: none;
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background: rgba(0,0,0,0.5);
+          z-index: 999;
+          backdrop-filter: blur(2px);
+        }
+        
+        .sidebar-overlay.show {
+          display: block;
+        }
+        
+        /* Prevent body scroll when sidebar is open */
+        body.sidebar-open {
+          overflow: hidden;
+        }
+      }
+      
+      @media (max-width: 767px) {
+        .dashboard-main {
+          padding: 0.75rem;
+          padding-top: 4rem;
+        }
+        
+        .dashboard-header {
+          padding: 1rem;
+          margin-bottom: 1rem;
+        }
+        
+        .dashboard-grid {
+          grid-template-columns: 1fr;
+          gap: 1rem;
+        }
+        
+        .dashboard-card {
+          padding: 1.5rem;
+        }
+        
+        .user-avatar {
+          width: 40px;
+          height: 40px;
+          font-size: 0.9rem;
+        }
+        
+        .user-details h5 {
+          font-size: 1rem;
+        }
+        
+        .user-details p {
+          font-size: 0.8rem;
+        }
+        
+        .balance-amount {
+          font-size: 2rem;
+        }
+        
+        .card-title {
+          font-size: 1.1rem;
+        }
+        
+        .spending-chart {
+          height: 150px;
+        }
+        
+        .chart-bar {
+          width: 20px;
+          margin: 0 3px;
+        }
+        
+        .category-item {
+          padding: 0.75rem 0;
+        }
+        
+        .category-icon {
+          width: 35px;
+          height: 35px;
+          font-size: 1rem;
+        }
+        
+        .category-name {
+          font-size: 0.9rem;
+        }
+        
+        .category-amount {
+          font-size: 0.8rem;
+        }
+      }
+      
+      @media (max-width: 575px) {
+        .dashboard-main {
+          padding: 0.5rem;
+          padding-top: 3.5rem;
+        }
+        
+        .dashboard-header {
+          padding: 0.75rem;
+          flex-direction: column;
+          gap: 1rem;
+          align-items: flex-start;
+        }
+        
+        .notification-bell {
+          margin-left: 0;
+          margin-right: 0;
+        }
+        
+        .dashboard-card {
+          padding: 1rem;
+        }
+        
+        .balance-amount {
+          font-size: 1.75rem;
+        }
+        
+        .card-title {
+          font-size: 1rem;
+        }
+        
+        .spending-chart {
+          height: 120px;
+        }
+        
+        .chart-bar {
+          width: 15px;
+          margin: 0 2px;
+        }
+        
+        .chart-labels {
+          font-size: 0.7rem;
+        }
+        
+        .category-item {
+          padding: 0.5rem 0;
+        }
+        
+        .category-icon {
+          width: 30px;
+          height: 30px;
+          font-size: 0.9rem;
+        }
+        
+        .category-name {
+          font-size: 0.8rem;
+        }
+        
+        .category-amount {
+          font-size: 0.7rem;
+        }
+      }
+      
+      /* AI Chat Mobile Responsive */
+      @media (max-width: 767px) {
+        #ai-chat .dashboard-card {
+          height: 500px;
+        }
+        
+        #chat-messages {
+          max-height: 300px;
+          padding: 0.75rem;
+        }
+        
+        #chat-messages > div {
+          margin-bottom: 0.75rem;
+        }
+        
+        #chat-messages > div:last-child {
+          margin-bottom: 0;
+        }
+        
+        #chat-messages .user-avatar,
+        #chat-messages > div > div:first-child {
+          width: 30px;
+          height: 30px;
+          margin-right: 0.5rem;
+        }
+        
+        #chat-messages .user-avatar i,
+        #chat-messages > div > div:first-child i {
+          font-size: 0.8rem;
+        }
+        
+        #chat-messages > div > div:last-child {
+          padding: 0.75rem;
+          max-width: 85%;
+        }
+        
+        #chat-messages > div > div:last-child p {
+          font-size: 0.9rem;
+          line-height: 1.4;
+        }
+        
+        #chat-messages > div > div:last-child ul {
+          padding-left: 1rem;
+        }
+        
+        #chat-messages > div > div:last-child li {
+          font-size: 0.8rem;
+        }
+        
+        #chat-input {
+          padding: 0.6rem;
+          font-size: 0.9rem;
+        }
+        
+        #ai-chat button {
+          padding: 0.6rem 1rem;
+        }
+        
+        #ai-chat .quick-actions {
+          gap: 0.3rem;
+          margin-top: 0.75rem;
+        }
+        
+        #ai-chat .quick-actions button {
+          padding: 0.4rem 0.8rem;
+          font-size: 0.8rem;
+        }
+      }
+      
+      @media (max-width: 575px) {
+        #ai-chat .dashboard-card {
+          height: 450px;
+        }
+        
+        #chat-messages {
+          max-height: 250px;
+          padding: 0.5rem;
+        }
+        
+        #chat-messages .user-avatar,
+        #chat-messages > div > div:first-child {
+          width: 25px;
+          height: 25px;
+          margin-right: 0.4rem;
+        }
+        
+        #chat-messages .user-avatar i,
+        #chat-messages > div > div:first-child i {
+          font-size: 0.7rem;
+        }
+        
+        #chat-messages > div > div:last-child {
+          padding: 0.6rem;
+          max-width: 90%;
+        }
+        
+        #chat-messages > div > div:last-child p {
+          font-size: 0.8rem;
+        }
+        
+        #chat-messages > div > div:last-child li {
+          font-size: 0.7rem;
+        }
+        
+        #chat-input {
+          padding: 0.5rem;
+          font-size: 0.8rem;
+        }
+        
+        #ai-chat button {
+          padding: 0.5rem 0.8rem;
+        }
+        
+        #ai-chat .quick-actions {
+          gap: 0.2rem;
+          margin-top: 0.5rem;
+        }
+        
+        #ai-chat .quick-actions button {
+          padding: 0.3rem 0.6rem;
+          font-size: 0.7rem;
+        }
+      }
+      
+      .sidebar-header {
+        text-align: center;
+        padding: 0 1.5rem 2rem;
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+        margin-bottom: 2rem;
+      }
+      
+      .sidebar-header img {
+        width: 120px;
+        margin-bottom: 1rem;
+      }
+      
+      .sidebar-header h4 {
+        color: white;
+        font-size: 1.2rem;
+        margin: 0;
+      }
+      
+      .sidebar-menu {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+      
+      .sidebar-menu li {
+        margin-bottom: 0.5rem;
+      }
+      
+      .sidebar-menu a {
+        display: flex;
+        align-items: center;
+        padding: 1rem 1.5rem;
+        color: rgba(255,255,255,0.8);
+        text-decoration: none;
+        transition: all 0.3s ease;
+        border-radius: 0 25px 25px 0;
+        margin-right: 1rem;
+      }
+      
+      .sidebar-menu a:hover,
+      .sidebar-menu a.active {
+        background: rgba(255,255,255,0.1);
+        color: white;
+        transform: translateX(5px);
+      }
+      
+      .sidebar-menu i {
+        margin-right: 1rem;
+        font-size: 1.2rem;
+        width: 20px;
+        text-align: center;
+      }
+      
+      .dashboard-header {
+        background: white;
+        padding: 1.5rem 2rem;
+        border-radius: 15px;
+        box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        margin-bottom: 2rem;
+        display: flex;
+        justify-content: between;
+        align-items: center;
+      }
+      
+      .user-info {
+        display: flex;
+        align-items: center;
+      }
+      
+      .user-avatar {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #3056d3, #13c296);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-weight: bold;
+        margin-right: 1rem;
+      }
+      
+      .user-details h5 {
+        margin: 0;
+        color: #333;
+      }
+      
+      .user-details p {
+        margin: 0;
+        color: #666;
+        font-size: 0.9rem;
+      }
+      
+      .notification-bell {
+        position: relative;
+        margin-left: auto;
+        margin-right: 2rem;
+      }
+      
+      .notification-badge {
+        position: absolute;
+        top: -5px;
+        right: -5px;
+        background: #ff4757;
+        color: white;
+        border-radius: 50%;
+        width: 20px;
+        height: 20px;
+        font-size: 0.7rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      
+      .dashboard-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+        margin-bottom: 2rem;
+      }
+      
+      .dashboard-card {
+        background: white;
+        border-radius: 15px;
+        padding: 2rem;
+        box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        transition: transform 0.3s ease;
+      }
+      
+      .dashboard-card:hover {
+        transform: translateY(-5px);
+      }
+      
+      .card-header {
+        display: flex;
+        justify-content: between;
+        align-items: center;
+        margin-bottom: 1.5rem;
+      }
+      
+      .card-title {
+        font-size: 1.2rem;
+        font-weight: 600;
+        color: #333;
+        margin: 0;
+      }
+      
+      .card-icon {
+        width: 50px;
+        height: 50px;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        color: white;
+      }
+      
+      .balance-card .card-icon {
+        background: linear-gradient(135deg, #3056d3, #13c296);
+      }
+      
+      .spending-card .card-icon {
+        background: linear-gradient(135deg, #ff6b6b, #ffa726);
+      }
+      
+      .savings-card .card-icon {
+        background: linear-gradient(135deg, #4caf50, #8bc34a);
+      }
+      
+      .balance-amount {
+        font-size: 2.5rem;
+        font-weight: bold;
+        color: #333;
+        margin-bottom: 0.5rem;
+      }
+      
+      .balance-change {
+        font-size: 0.9rem;
+        color: #4caf50;
+      }
+      
+      .balance-change.negative {
+        color: #ff6b6b;
+      }
+      
+      .spending-chart {
+        height: 200px;
+        margin: 1rem 0;
+        position: relative;
+      }
+      
+      .chart-bar {
+        display: inline-block;
+        width: 30px;
+        margin: 0 5px;
+        background: linear-gradient(to top, #3056d3, #13c296);
+        border-radius: 5px 5px 0 0;
+        position: relative;
+      }
+      
+      .chart-labels {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 1rem;
+        font-size: 0.8rem;
+        color: #666;
+      }
+      
+      .category-item {
+        display: flex;
+        justify-content: between;
+        align-items: center;
+        padding: 1rem 0;
+        border-bottom: 1px solid #eee;
+      }
+      
+      .category-item:last-child {
+        border-bottom: none;
+      }
+      
+      .category-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 1rem;
+        color: white;
+        font-size: 1.1rem;
+      }
+      
+      .category-info {
+        flex: 1;
+      }
+      
+      .category-name {
+        font-weight: 500;
+        color: #333;
+        margin-bottom: 0.2rem;
+      }
+      
+      .category-amount {
+        font-size: 0.9rem;
+        color: #666;
+      }
+      
+      .category-percentage {
+        font-size: 0.8rem;
+        color: #999;
+      }
+      
+      .dashboard-section {
+        display: none;
+      }
+      
+      .dashboard-section.active {
+        display: block;
+      }
+      
+      .account-item {
+        display: flex;
+        align-items: center;
+        padding: 1rem;
+        background: #f8f9fa;
+        border-radius: 10px;
+        margin-bottom: 1rem;
+        transition: all 0.3s ease;
+      }
+      
+      .account-item:hover {
+        background: #e9ecef;
+        transform: translateX(5px);
+      }
+      
+      .account-icon {
+        width: 50px;
+        height: 50px;
+        border-radius: 10px;
+        background: linear-gradient(135deg, #3056d3, #13c296);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 1.5rem;
+        margin-right: 1rem;
+      }
+      
+      .account-info {
+        flex: 1;
+      }
+      
+      .account-name {
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 0.2rem;
+      }
+      
+      .account-number {
+        font-size: 0.9rem;
+        color: #666;
+      }
+      
+      .account-balance {
+        font-weight: 600;
+        color: #333;
+      }
+      
+      .settings-section {
+        background: white;
+        border-radius: 15px;
+        padding: 2rem;
+        margin-bottom: 2rem;
+      }
+      
+      .settings-section h3 {
+        margin-bottom: 1.5rem;
+        color: #333;
+      }
+      
+      .form-group {
+        margin-bottom: 1.5rem;
+      }
+      
+      .form-group label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: 500;
+        color: #333;
+      }
+      
+      .form-group input,
+      .form-group select {
+        width: 100%;
+        padding: 0.75rem;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        font-size: 1rem;
+      }
+      
+      .form-group input:focus,
+      .form-group select:focus {
+        outline: none;
+        border-color: #3056d3;
+        box-shadow: 0 0 0 3px rgba(48, 86, 211, 0.1);
+      }
+      
+      .btn {
+        padding: 0.75rem 1.5rem;
+        border: none;
+        border-radius: 8px;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+      
+      .btn-primary {
+        background: linear-gradient(135deg, #3056d3, #13c296);
+        color: white;
+      }
+      
+      .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(48, 86, 211, 0.3);
+      }
+      
+      .btn-danger {
+        background: #ff4757;
+        color: white;
+      }
+      
+      .btn-danger:hover {
+        background: #ff3742;
+        transform: translateY(-2px);
+      }
+      
+      .btn-secondary {
+        background: #6c757d;
+        color: white;
+      }
+      
+      .btn-secondary:hover {
+        background: #5a6268;
+        transform: translateY(-2px);
+      }
+      
+      .danger-zone {
+        border: 2px solid #ff4757;
+        border-radius: 15px;
+        padding: 2rem;
+        margin-top: 2rem;
+      }
+      
+      .danger-zone h3 {
+        color: #ff4757;
+        margin-bottom: 1rem;
+      }
+      
+      .danger-zone p {
+        color: #666;
+        margin-bottom: 1.5rem;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- ====== Mobile Sidebar Toggle ====== -->
+    <button class="sidebar-toggle" onclick="toggleSidebar()">
+      <span class="toggler-icon"></span>
+      <span class="toggler-icon"></span>
+      <span class="toggler-icon"></span>
+    </button>
+    
+    <!-- ====== Sidebar Overlay ====== -->
+    <div class="sidebar-overlay" onclick="closeSidebar()"></div>
+    
+    <!-- ====== Sidebar Start ====== -->
+    <div class="dashboard-sidebar">
+      <div class="sidebar-header">
+        <img src="assets/images/logo/logo.svg" alt="B PLAY" />
+        <h4>B PLAY Dashboard</h4>
+      </div>
+      
+      <ul class="sidebar-menu">
+        <li>
+          <a href="#overview" class="active" onclick="handleMenuClick('overview')">
+            <i class="lni lni-dashboard"></i>
+            Overview
+          </a>
+        </li>
+        <li>
+          <a href="#transactions" onclick="handleMenuClick('transactions')">
+            <i class="lni lni-credit-cards"></i>
+            Transactions
+          </a>
+        </li>
+        <li>
+          <a href="#analytics" onclick="handleMenuClick('analytics')">
+            <i class="lni lni-pie-chart"></i>
+            Analytics
+          </a>
+        </li>
+        <li>
+          <a href="#budgets" onclick="handleMenuClick('budgets')">
+            <i class="lni lni-target"></i>
+            Budgets & Limits
+          </a>
+        </li>
+        <li>
+          <a href="#banks" onclick="handleMenuClick('banks')">
+            <i class="lni lni-bank"></i>
+            Bank Accounts
+          </a>
+        </li>
+        <li>
+          <a href="#goals" onclick="handleMenuClick('goals')">
+            <i class="lni lni-stats-up"></i>
+            Savings Goals
+          </a>
+        </li>
+                 <li>
+           <a href="#ai-chat" onclick="handleMenuClick('ai-chat')">
+             <i class="lni lni-comments"></i>
+             AI Chat
+           </a>
+         </li>
+         <li>
+           <a href="#settings" onclick="handleMenuClick('settings')">
+             <i class="lni lni-cog"></i>
+             Settings
+           </a>
+         </li>
+        <li>
+          <a href="index.html">
+            <i class="lni lni-home"></i>
+            Back to Home
+          </a>
+        </li>
+        <li>
+          <a href="login.html">
+            <i class="lni lni-exit"></i>
+            Logout
+          </a>
+        </li>
+      </ul>
+    </div>
+    <!-- ====== Sidebar End ====== -->
+
+    <!-- ====== Main Content Start ====== -->
+    <div class="dashboard-main">
+      <!-- Dashboard Header -->
+      <div class="dashboard-header">
+        <div class="user-info">
+          <div class="user-avatar">JD</div>
+          <div class="user-details">
+            <h5>John Doe</h5>
+            <p>Premium Member</p>
+          </div>
+        </div>
+        
+        <div class="notification-bell">
+          <i class="lni lni-bell" style="font-size: 1.5rem; color: #666;"></i>
+          <span class="notification-badge">3</span>
+        </div>
+      </div>
+
+      <!-- Overview Section -->
+      <div id="overview" class="dashboard-section">
+        <div class="dashboard-grid">
+          <!-- Balance Card -->
+          <div class="dashboard-card balance-card">
+            <div class="card-header">
+              <h3 class="card-title">Total Balance</h3>
+              <div class="card-icon">
+                <i class="lni lni-wallet"></i>
+              </div>
+            </div>
+            <div class="balance-amount">€24,580</div>
+            <div class="balance-change">+€1,240 this month</div>
+          </div>
+
+          <!-- Spending Card -->
+          <div class="dashboard-card spending-card">
+            <div class="card-header">
+              <h3 class="card-title">Monthly Spending</h3>
+              <div class="card-icon">
+                <i class="lni lni-cart"></i>
+              </div>
+            </div>
+            <div class="balance-amount">€3,420</div>
+            <div class="balance-change negative">+€180 vs last month</div>
+            <div class="spending-chart">
+              <div class="chart-bar" style="height: 60px;"></div>
+              <div class="chart-bar" style="height: 80px;"></div>
+              <div class="chart-bar" style="height: 45px;"></div>
+              <div class="chart-bar" style="height: 90px;"></div>
+              <div class="chart-bar" style="height: 70px;"></div>
+              <div class="chart-bar" style="height: 85px;"></div>
+              <div class="chart-bar" style="height: 65px;"></div>
+            </div>
+            <div class="chart-labels">
+              <span>Mon</span>
+              <span>Tue</span>
+              <span>Wed</span>
+              <span>Thu</span>
+              <span>Fri</span>
+              <span>Sat</span>
+              <span>Sun</span>
+            </div>
+          </div>
+
+          <!-- Savings Card -->
+          <div class="dashboard-card savings-card">
+            <div class="card-header">
+              <h3 class="card-title">Monthly Savings</h3>
+              <div class="card-icon">
+                <i class="lni lni-piggy-bank"></i>
+              </div>
+            </div>
+            <div class="balance-amount">€1,240</div>
+            <div class="balance-change">On track for €15K goal</div>
+            <div class="limit-progress">
+              <div class="progress-bar">
+                <div class="progress-fill" style="width: 75%;"></div>
+              </div>
+              <div class="limit-info">
+                <span>€11,250 saved</span>
+                <span>75% of goal</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Recent Transactions -->
+        <div class="dashboard-card">
+          <div class="card-header">
+            <h3 class="card-title">
+              <i class="lni lni-list" style="color: #3056d3; margin-right: 0.5rem;"></i>
+              Recent Transactions
+            </h3>
+          </div>
+          <div class="category-item">
+            <div class="category-icon" style="background: #ff6b6b;">
+              <i class="lni lni-cart"></i>
+            </div>
+            <div class="category-info">
+              <div class="category-name">Grocery Shopping</div>
+              <div class="category-amount">€85.50 - Today</div>
+            </div>
+            <div class="category-percentage">-€85.50</div>
+          </div>
+          <div class="category-item">
+            <div class="category-icon" style="background: #4caf50;">
+              <i class="lni lni-bank"></i>
+            </div>
+            <div class="category-info">
+              <div class="category-name">Salary Deposit</div>
+              <div class="category-amount">€3,200 - Yesterday</div>
+            </div>
+            <div class="category-percentage">+€3,200</div>
+          </div>
+          <div class="category-item">
+            <div class="category-icon" style="background: #ff9800;">
+              <i class="lni lni-coffee-cup"></i>
+            </div>
+            <div class="category-info">
+              <div class="category-name">Coffee Shop</div>
+              <div class="category-amount">€4.50 - Yesterday</div>
+            </div>
+            <div class="category-percentage">-€4.50</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Analytics Section -->
+      <div id="analytics" class="dashboard-section" style="display: none;">
+        <div class="dashboard-grid">
+          <div class="dashboard-card">
+            <div class="card-header">
+              <h3 class="card-title">
+                <i class="lni lni-pie-chart" style="color: #3056d3; margin-right: 0.5rem;"></i>
+                Spending by Category
+              </h3>
+            </div>
+            <div class="category-item">
+              <div class="category-icon" style="background: #ff6b6b;">
+                <i class="lni lni-cart"></i>
+              </div>
+              <div class="category-info">
+                <div class="category-name">Food & Dining</div>
+                <div class="category-amount">€1,240 this month</div>
+              </div>
+              <div class="category-percentage">36%</div>
+            </div>
+            <div class="category-item">
+              <div class="category-icon" style="background: #4caf50;">
+                <i class="lni lni-home"></i>
+              </div>
+              <div class="category-info">
+                <div class="category-name">Housing</div>
+                <div class="category-amount">€1,200 this month</div>
+              </div>
+              <div class="category-percentage">35%</div>
+            </div>
+            <div class="category-item">
+              <div class="category-icon" style="background: #ff9800;">
+                <i class="lni lni-car"></i>
+              </div>
+              <div class="category-info">
+                <div class="category-name">Transportation</div>
+                <div class="category-amount">€480 this month</div>
+              </div>
+              <div class="category-percentage">14%</div>
+            </div>
+            <div class="category-item">
+              <div class="category-icon" style="background: #9c27b0;">
+                <i class="lni lni-game"></i>
+              </div>
+              <div class="category-info">
+                <div class="category-name">Entertainment</div>
+                <div class="category-amount">€320 this month</div>
+              </div>
+              <div class="category-percentage">9%</div>
+            </div>
+            <div class="category-item">
+              <div class="category-icon" style="background: #607d8b;">
+                <i class="lni lni-heart"></i>
+              </div>
+              <div class="category-info">
+                <div class="category-name">Healthcare</div>
+                <div class="category-amount">€180 this month</div>
+              </div>
+              <div class="category-percentage">5%</div>
+            </div>
+          </div>
+
+          <div class="dashboard-card">
+            <div class="card-header">
+              <h3 class="card-title">
+                <i class="lni lni-bulb" style="color: #3056d3; margin-right: 0.5rem;"></i>
+                AI Insights
+              </h3>
+            </div>
+            <div style="padding: 1rem; background: #f8f9fa; border-radius: 10px; margin-bottom: 1rem;">
+              <h5 style="color: #3056d3; margin-bottom: 0.5rem;">💡 Smart Suggestion</h5>
+              <p style="margin: 0; color: #666;">Your food spending is 15% higher than last month. Consider meal planning to save €200+ monthly.</p>
+            </div>
+            <div style="padding: 1rem; background: #f8f9fa; border-radius: 10px; margin-bottom: 1rem;">
+              <h5 style="color: #4caf50; margin-bottom: 0.5rem;">🎯 Goal Progress</h5>
+              <p style="margin: 0; color: #666;">You're on track to reach your €15K savings goal by December. Keep it up!</p>
+            </div>
+            <div style="padding: 1rem; background: #f8f9fa; border-radius: 10px;">
+              <h5 style="color: #ff9800; margin-bottom: 0.5rem;">⚠️ Alert</h5>
+              <p style="margin: 0; color: #666;">You're approaching your entertainment budget limit. 85% used this month.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Budgets & Limits Section -->
+      <div id="budgets" class="dashboard-section" style="display: none;">
+        <div class="dashboard-grid">
+          <div class="dashboard-card">
+            <div class="card-header">
+              <h3 class="card-title">
+                <i class="lni lni-target" style="color: #3056d3; margin-right: 0.5rem;"></i>
+                Monthly Budgets
+              </h3>
+            </div>
+            <div class="limit-progress">
+              <div style="display: flex; justify-content: between; margin-bottom: 0.5rem;">
+                <span>Food & Dining</span>
+                <span>€1,240 / €1,500</span>
+              </div>
+              <div class="progress-bar">
+                <div class="progress-fill" style="width: 83%;"></div>
+              </div>
+              <div class="limit-info">
+                <span>€260 remaining</span>
+                <span>83% used</span>
+              </div>
+            </div>
+            
+            <div class="limit-progress">
+              <div style="display: flex; justify-content: between; margin-bottom: 0.5rem;">
+                <span>Entertainment</span>
+                <span>€320 / €400</span>
+              </div>
+              <div class="progress-bar">
+                <div class="progress-fill warning" style="width: 80%;"></div>
+              </div>
+              <div class="limit-info">
+                <span>€80 remaining</span>
+                <span>80% used</span>
+              </div>
+            </div>
+            
+            <div class="limit-progress">
+              <div style="display: flex; justify-content: between; margin-bottom: 0.5rem;">
+                <span>Shopping</span>
+                <span>€180 / €300</span>
+              </div>
+              <div class="progress-bar">
+                <div class="progress-fill" style="width: 60%;"></div>
+              </div>
+              <div class="limit-info">
+                <span>€120 remaining</span>
+                <span>60% used</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="dashboard-card">
+            <div class="card-header">
+              <h3 class="card-title">
+                <i class="lni lni-bell" style="color: #3056d3; margin-right: 0.5rem;"></i>
+                Notifications
+              </h3>
+            </div>
+            <div style="padding: 1rem; background: #fff3cd; border: 1px solid #ffeaa7; border-radius: 10px; margin-bottom: 1rem;">
+              <h6 style="color: #856404; margin-bottom: 0.5rem;">⚠️ Budget Alert</h6>
+              <p style="margin: 0; color: #856404;">You've used 80% of your entertainment budget. Consider reducing spending this week.</p>
+            </div>
+            <div style="padding: 1rem; background: #d1ecf1; border: 1px solid #bee5eb; border-radius: 10px; margin-bottom: 1rem;">
+              <h6 style="color: #0c5460; margin-bottom: 0.5rem;">💳 Large Transaction</h6>
+              <p style="margin: 0; color: #0c5460;">Unusual spending detected: €85.50 at grocery store (higher than usual).</p>
+            </div>
+            <div style="padding: 1rem; background: #d4edda; border: 1px solid #c3e6cb; border-radius: 10px;">
+              <h6 style="color: #155724; margin-bottom: 0.5rem;">✅ Goal Achieved</h6>
+              <p style="margin: 0; color: #155724;">Congratulations! You've reached 75% of your annual savings goal.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bank Accounts Section -->
+      <div id="banks" class="dashboard-section" style="display: none;">
+        <div class="dashboard-grid">
+          <div class="dashboard-card">
+            <div class="card-header">
+              <h3 class="card-title">
+                <i class="lni lni-bank" style="color: #3056d3; margin-right: 0.5rem;"></i>
+                Connected Banks
+              </h3>
+            </div>
+            <div class="category-item">
+              <div class="category-icon" style="background: #3056d3;">
+                <i class="lni lni-bank"></i>
+              </div>
+              <div class="category-info">
+                <div class="category-name">Deutsche Bank</div>
+                <div class="category-amount">Checking Account • €12,450</div>
+              </div>
+              <div class="category-percentage">Connected</div>
+            </div>
+            <div class="category-item">
+              <div class="category-icon" style="background: #13c296;">
+                <i class="lni lni-credit-cards"></i>
+              </div>
+              <div class="category-info">
+                <div class="category-name">Commerzbank</div>
+                <div class="category-amount">Savings Account • €8,230</div>
+              </div>
+              <div class="category-percentage">Connected</div>
+            </div>
+            <div class="category-item">
+              <div class="category-icon" style="background: #ff6b6b;">
+                <i class="lni lni-credit-cards"></i>
+              </div>
+              <div class="category-info">
+                <div class="category-name">N26</div>
+                <div class="category-amount">Credit Card • €3,900</div>
+              </div>
+              <div class="category-percentage">Connected</div>
+            </div>
+          </div>
+
+          <div class="dashboard-card">
+            <div class="bank-connection" onclick="connectBank()">
+              <i class="lni lni-plus"></i>
+              <h4>Connect New Bank</h4>
+              <p>Securely connect your bank account to start tracking your finances</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+             <!-- AI Chat Section -->
+       <div id="ai-chat" class="dashboard-section" style="display: none;">
+         <div class="dashboard-card" style="height: 600px; display: flex; flex-direction: column;">
+           <div class="card-header">
+             <h3 class="card-title">
+               <i class="lni lni-robot" style="color: #3056d3; margin-right: 0.5rem;"></i>
+               AI Financial Assistant
+             </h3>
+             <div style="display: flex; align-items: center;">
+               <div style="width: 8px; height: 8px; background: #4caf50; border-radius: 50%; margin-right: 0.5rem;"></div>
+               <span style="color: #666; font-size: 0.9rem;">Online</span>
+             </div>
+           </div>
+           
+           <div id="chat-messages" style="flex: 1; overflow-y: auto; padding: 1rem; background: #f8f9fa; border-radius: 10px; margin-bottom: 1rem; max-height: 400px;">
+             <!-- AI Welcome Message -->
+             <div style="display: flex; margin-bottom: 1rem;">
+               <div style="width: 35px; height: 35px; background: linear-gradient(135deg, #3056d3, #13c296); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 0.75rem; flex-shrink: 0;">
+                 <i class="lni lni-robot" style="color: white; font-size: 0.9rem;"></i>
+               </div>
+               <div style="background: white; padding: 1rem; border-radius: 15px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); max-width: 80%;">
+                 <p style="margin: 0; color: #333;">Hello! I'm your AI financial assistant. I can help you with:</p>
+                 <ul style="margin: 0.5rem 0 0 0; padding-left: 1.5rem; color: #666;">
+                   <li>Analyzing your spending patterns</li>
+                   <li>Creating budgets and savings plans</li>
+                   <li>Explaining financial concepts</li>
+                   <li>Providing investment advice</li>
+                   <li>Answering questions about your transactions</li>
+                 </ul>
+                 <p style="margin: 0.5rem 0 0 0; color: #666;">How can I help you today?</p>
+               </div>
+             </div>
+             
+             <!-- User Message -->
+             <div style="display: flex; justify-content: flex-end; margin-bottom: 1rem;">
+               <div style="background: linear-gradient(135deg, #3056d3, #13c296); color: white; padding: 1rem; border-radius: 15px; max-width: 80%;">
+                 <p style="margin: 0;">Can you analyze my spending this month?</p>
+               </div>
+             </div>
+             
+             <!-- AI Response -->
+             <div style="display: flex; margin-bottom: 1rem;">
+               <div style="width: 35px; height: 35px; background: linear-gradient(135deg, #3056d3, #13c296); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 0.75rem; flex-shrink: 0;">
+                 <i class="lni lni-robot" style="color: white; font-size: 0.9rem;"></i>
+               </div>
+               <div style="background: white; padding: 1rem; border-radius: 15px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); max-width: 80%;">
+                 <p style="margin: 0; color: #333;">Based on your spending this month, here's my analysis:</p>
+                 <div style="margin: 0.5rem 0; padding: 0.75rem; background: #f8f9fa; border-radius: 8px;">
+                   <p style="margin: 0 0 0.5rem 0; color: #333; font-weight: 500;">📊 Spending Summary:</p>
+                   <ul style="margin: 0; padding-left: 1.5rem; color: #666;">
+                     <li>Total spent: €3,420 (€180 more than last month)</li>
+                     <li>Biggest category: Food & Dining (36% - €1,240)</li>
+                     <li>You're 83% through your food budget</li>
+                     <li>Entertainment spending is approaching limit (80%)</li>
+                   </ul>
+                 </div>
+                 <p style="margin: 0.5rem 0 0 0; color: #666;">💡 <strong>Recommendation:</strong> Consider meal planning to reduce food costs by €200+ monthly.</p>
+               </div>
+             </div>
+           </div>
+           
+           <div style="display: flex; gap: 0.5rem;">
+             <input type="text" id="chat-input" placeholder="Ask me anything about your finances..." style="flex: 1; padding: 0.75rem; border: 1px solid #ddd; border-radius: 8px; font-size: 1rem;" onkeypress="handleChatKeyPress(event)">
+             <button onclick="sendMessage()" style="background: linear-gradient(135deg, #3056d3, #13c296); color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 8px; cursor: pointer; transition: all 0.3s ease;">
+               <i class="lni lni-arrow-right"></i>
+             </button>
+           </div>
+           
+           <div class="quick-actions" style="margin-top: 1rem; display: flex; gap: 0.5rem; flex-wrap: wrap;">
+             <button onclick="quickQuestion('How can I save more money?')" style="background: #f8f9fa; border: 1px solid #ddd; padding: 0.5rem 1rem; border-radius: 20px; cursor: pointer; font-size: 0.9rem; transition: all 0.3s ease;">💡 Save Money</button>
+             <button onclick="quickQuestion('Create a budget plan')" style="background: #f8f9fa; border: 1px solid #ddd; padding: 0.5rem 1rem; border-radius: 20px; cursor: pointer; font-size: 0.9rem; transition: all 0.3s ease;">📋 Budget Plan</button>
+             <button onclick="quickQuestion('Investment advice')" style="background: #f8f9fa; border: 1px solid #ddd; padding: 0.5rem 1rem; border-radius: 20px; cursor: pointer; font-size: 0.9rem; transition: all 0.3s ease;">💰 Investments</button>
+             <button onclick="quickQuestion('Explain my spending patterns')" style="background: #f8f9fa; border: 1px solid #ddd; padding: 0.5rem 1rem; border-radius: 20px; cursor: pointer; font-size: 0.9rem; transition: all 0.3s ease;">📊 Analysis</button>
+           </div>
+         </div>
+       </div>
+
+       <!-- Settings Section -->
+       <div id="settings" class="dashboard-section" style="display: none;">
+        <div class="settings-section">
+          <div class="tab-buttons">
+            <button class="tab-button active" onclick="showTab('profile')">
+              <i class="lni lni-user" style="margin-right: 0.5rem;"></i>Profile
+            </button>
+            <button class="tab-button" onclick="showTab('security')">
+              <i class="lni lni-shield" style="margin-right: 0.5rem;"></i>Security
+            </button>
+            <button class="tab-button" onclick="showTab('notifications')">
+              <i class="lni lni-bell" style="margin-right: 0.5rem;"></i>Notifications
+            </button>
+            <button class="tab-button" onclick="showTab('account')">
+              <i class="lni lni-cog" style="margin-right: 0.5rem;"></i>Account
+            </button>
+          </div>
+
+          <!-- Profile Tab -->
+          <div id="profile" class="settings-tab active">
+            <h4><i class="lni lni-user" style="color: #3056d3; margin-right: 0.5rem;"></i>Profile Settings</h4>
+            <div class="form-group">
+              <label>Full Name</label>
+              <input type="text" value="John Doe" />
+            </div>
+            <div class="form-group">
+              <label>Email</label>
+              <input type="email" value="john.doe@example.com" />
+            </div>
+            <div class="form-group">
+              <label>Phone</label>
+              <input type="tel" value="+49 123 456 789" />
+            </div>
+            <div class="form-group">
+              <label>Currency</label>
+              <select>
+                <option>EUR (€)</option>
+                <option>USD ($)</option>
+                <option>GBP (£)</option>
+              </select>
+            </div>
+            <button class="ud-main-btn">Save Changes</button>
+          </div>
+
+          <!-- Security Tab -->
+          <div id="security" class="settings-tab">
+            <h4><i class="lni lni-shield" style="color: #3056d3; margin-right: 0.5rem;"></i>Security Settings</h4>
+            <div class="form-group">
+              <label>Current Password</label>
+              <input type="password" />
+            </div>
+            <div class="form-group">
+              <label>New Password</label>
+              <input type="password" />
+            </div>
+            <div class="form-group">
+              <label>Confirm New Password</label>
+              <input type="password" />
+            </div>
+            <div class="form-group">
+              <label>
+                <input type="checkbox" checked /> Enable Two-Factor Authentication
+              </label>
+            </div>
+            <button class="ud-main-btn">Update Password</button>
+          </div>
+
+          <!-- Notifications Tab -->
+          <div id="notifications" class="settings-tab">
+            <h4><i class="lni lni-bell" style="color: #3056d3; margin-right: 0.5rem;"></i>Notification Preferences</h4>
+            <div class="form-group">
+              <label>
+                <input type="checkbox" checked /> Budget alerts
+              </label>
+            </div>
+            <div class="form-group">
+              <label>
+                <input type="checkbox" checked /> Large transaction notifications
+              </label>
+            </div>
+            <div class="form-group">
+              <label>
+                <input type="checkbox" checked /> Goal progress updates
+              </label>
+            </div>
+            <div class="form-group">
+              <label>
+                <input type="checkbox" checked /> Weekly spending reports
+              </label>
+            </div>
+            <div class="form-group">
+              <label>
+                <input type="checkbox" /> Marketing emails
+              </label>
+            </div>
+            <button class="ud-main-btn">Save Preferences</button>
+          </div>
+
+          <!-- Account Tab -->
+          <div id="account" class="settings-tab">
+            <h4><i class="lni lni-cog" style="color: #3056d3; margin-right: 0.5rem;"></i>Account Management</h4>
+            <div style="padding: 1rem; background: #f8d7da; border: 1px solid #f5c6cb; border-radius: 10px; margin-bottom: 2rem;">
+              <h5 style="color: #721c24; margin-bottom: 0.5rem;">⚠️ Danger Zone</h5>
+              <p style="margin: 0; color: #721c24;">These actions cannot be undone. Please be certain.</p>
+            </div>
+            
+            <div class="form-group">
+              <label>Export Data</label>
+              <button class="ud-main-btn ud-border-btn">Download All Data</button>
+            </div>
+            
+            <div class="form-group">
+              <label>Delete Account</label>
+              <p style="color: #666; margin-bottom: 1rem;">This will permanently delete your account and all associated data.</p>
+              <button class="btn-danger">Delete My Account</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- ====== Main Content End ====== -->
+
+    <!-- ====== All Javascript Files ====== -->
+    <script src="assets/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/wow.min.js"></script>
+    <script src="assets/js/main.js"></script>
+    
+    <script>
+      // Mobile Sidebar Functions
+      function toggleSidebar() {
+        const sidebar = document.querySelector('.dashboard-sidebar');
+        const toggle = document.querySelector('.sidebar-toggle');
+        const overlay = document.querySelector('.sidebar-overlay');
+        const body = document.body;
+        
+        sidebar.classList.toggle('show');
+        toggle.classList.toggle('active');
+        overlay.classList.toggle('show');
+        
+        // Prevent body scroll on mobile when sidebar is open
+        if (window.innerWidth <= 991) {
+          body.classList.toggle('sidebar-open');
+        }
+      }
+      
+      function closeSidebar() {
+        const sidebar = document.querySelector('.dashboard-sidebar');
+        const toggle = document.querySelector('.sidebar-toggle');
+        const overlay = document.querySelector('.sidebar-overlay');
+        const body = document.body;
+        
+        sidebar.classList.remove('show');
+        toggle.classList.remove('active');
+        overlay.classList.remove('show');
+        body.classList.remove('sidebar-open');
+      }
+      
+      // Close sidebar when clicking on a menu item on mobile
+      function handleMenuClick(sectionName) {
+        showSection(sectionName);
+        
+        // Close sidebar on mobile
+        if (window.innerWidth <= 991) {
+          closeSidebar();
+        }
+      }
+      
+      // Handle window resize
+      window.addEventListener('resize', function() {
+        if (window.innerWidth > 991) {
+          closeSidebar();
+        }
+      });
+      
+      // Close sidebar when clicking outside on mobile
+      document.addEventListener('click', function(event) {
+        const sidebar = document.querySelector('.dashboard-sidebar');
+        const toggle = document.querySelector('.sidebar-toggle');
+        
+        if (window.innerWidth <= 991 && 
+            !sidebar.contains(event.target) && 
+            !toggle.contains(event.target) &&
+            sidebar.classList.contains('show')) {
+          closeSidebar();
+        }
+      });
+      
+      function showSection(sectionName) {
+        // Hide all sections
+        document.querySelectorAll('.dashboard-section').forEach(section => {
+          section.style.display = 'none';
+        });
+        
+        // Show selected section
+        document.getElementById(sectionName).style.display = 'block';
+        
+        // Update active menu item
+        document.querySelectorAll('.sidebar-menu a').forEach(link => {
+          link.classList.remove('active');
+        });
+        event.target.classList.add('active');
+      }
+      
+      function showTab(tabName) {
+        // Hide all tabs
+        document.querySelectorAll('.settings-tab').forEach(tab => {
+          tab.classList.remove('active');
+        });
+        
+        // Show selected tab
+        document.getElementById(tabName).classList.add('active');
+        
+        // Update active tab button
+        document.querySelectorAll('.tab-button').forEach(button => {
+          button.classList.remove('active');
+        });
+        event.target.classList.add('active');
+      }
+      
+      function connectBank() {
+        alert('Bank connection feature would open Nordigen/Open Banking interface here.');
+      }
+      
+      function sendMessage() {
+        const input = document.getElementById('chat-input');
+        const message = input.value.trim();
+        
+        if (message) {
+          addUserMessage(message);
+          input.value = '';
+          
+          // Simulate AI response
+          setTimeout(() => {
+            addAIResponse(getAIResponse(message));
+          }, 1000);
+        }
+      }
+      
+      function handleChatKeyPress(event) {
+        if (event.key === 'Enter') {
+          sendMessage();
+        }
+      }
+      
+      function quickQuestion(question) {
+        addUserMessage(question);
+        
+        // Simulate AI response
+        setTimeout(() => {
+          addAIResponse(getAIResponse(question));
+        }, 1000);
+      }
+      
+      function addUserMessage(message) {
+        const chatMessages = document.getElementById('chat-messages');
+        const messageDiv = document.createElement('div');
+        messageDiv.style.cssText = 'display: flex; justify-content: flex-end; margin-bottom: 1rem;';
+        messageDiv.innerHTML = `
+          <div style="background: linear-gradient(135deg, #3056d3, #13c296); color: white; padding: 1rem; border-radius: 15px; max-width: 80%;">
+            <p style="margin: 0;">${message}</p>
+          </div>
+        `;
+        chatMessages.appendChild(messageDiv);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+      }
+      
+      function addAIResponse(response) {
+        const chatMessages = document.getElementById('chat-messages');
+        const messageDiv = document.createElement('div');
+        messageDiv.style.cssText = 'display: flex; margin-bottom: 1rem;';
+        messageDiv.innerHTML = `
+          <div style="width: 35px; height: 35px; background: linear-gradient(135deg, #3056d3, #13c296); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 0.75rem; flex-shrink: 0;">
+            <i class="lni lni-robot" style="color: white; font-size: 0.9rem;"></i>
+          </div>
+          <div style="background: white; padding: 1rem; border-radius: 15px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); max-width: 80%;">
+            ${response}
+          </div>
+        `;
+        chatMessages.appendChild(messageDiv);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+      }
+      
+      function getAIResponse(message) {
+        const lowerMessage = message.toLowerCase();
+        
+        if (lowerMessage.includes('save') || lowerMessage.includes('money')) {
+          return `
+            <p style="margin: 0; color: #333;">Here are some smart ways to save more money:</p>
+            <div style="margin: 0.5rem 0; padding: 0.75rem; background: #f8f9fa; border-radius: 8px;">
+              <p style="margin: 0 0 0.5rem 0; color: #333; font-weight: 500;">💡 Savings Tips:</p>
+              <ul style="margin: 0; padding-left: 1.5rem; color: #666;">
+                <li>Set up automatic transfers to savings (€200-500 monthly)</li>
+                <li>Use the 50/30/20 rule: 50% needs, 30% wants, 20% savings</li>
+                <li>Track your subscriptions and cancel unused ones</li>
+                <li>Cook at home more often (save €300+ monthly)</li>
+                <li>Use cashback cards for daily purchases</li>
+              </ul>
+            </div>
+            <p style="margin: 0.5rem 0 0 0; color: #666;">Would you like me to create a personalized savings plan for you?</p>
+          `;
+        } else if (lowerMessage.includes('budget') || lowerMessage.includes('plan')) {
+          return `
+            <p style="margin: 0; color: #333;">Based on your current spending, here's a recommended budget plan:</p>
+            <div style="margin: 0.5rem 0; padding: 0.75rem; background: #f8f9fa; border-radius: 8px;">
+              <p style="margin: 0 0 0.5rem 0; color: #333; font-weight: 500;">📋 Monthly Budget Plan:</p>
+              <ul style="margin: 0; padding-left: 1.5rem; color: #666;">
+                <li>Housing: €1,200 (35%)</li>
+                <li>Food & Dining: €1,000 (29%)</li>
+                <li>Transportation: €400 (12%)</li>
+                <li>Entertainment: €300 (9%)</li>
+                <li>Healthcare: €200 (6%)</li>
+                <li>Savings: €1,000 (29%)</li>
+                <li>Emergency Fund: €300 (9%)</li>
+              </ul>
+            </div>
+            <p style="margin: 0.5rem 0 0 0; color: #666;">This plan would help you save €1,300 monthly while maintaining your lifestyle!</p>
+          `;
+        } else if (lowerMessage.includes('investment') || lowerMessage.includes('invest')) {
+          return `
+            <p style="margin: 0; color: #333;">Here's my investment advice based on your financial situation:</p>
+            <div style="margin: 0.5rem 0; padding: 0.75rem; background: #f8f9fa; border-radius: 8px;">
+              <p style="margin: 0 0 0.5rem 0; color: #333; font-weight: 500;">💰 Investment Strategy:</p>
+              <ul style="margin: 0; padding-left: 1.5rem; color: #666;">
+                <li>Start with €500 emergency fund (you're close!)</li>
+                <li>Consider index funds for long-term growth</li>
+                <li>Diversify: 60% stocks, 30% bonds, 10% alternatives</li>
+                <li>Automate monthly investments (€200-500)</li>
+                <li>Consider tax-advantaged accounts first</li>
+              </ul>
+            </div>
+            <p style="margin: 0.5rem 0 0 0; color: #666;">Remember: Start small and increase gradually. Would you like specific fund recommendations?</p>
+          `;
+        } else if (lowerMessage.includes('spending') || lowerMessage.includes('analysis') || lowerMessage.includes('pattern')) {
+          return `
+            <p style="margin: 0; color: #333;">Here's your spending pattern analysis:</p>
+            <div style="margin: 0.5rem 0; padding: 0.75rem; background: #f8f9fa; border-radius: 8px;">
+              <p style="margin: 0 0 0.5rem 0; color: #333; font-weight: 500;">📊 Pattern Analysis:</p>
+              <ul style="margin: 0; padding-left: 1.5rem; color: #666;">
+                <li>You spend most on weekends (65% of transactions)</li>
+                <li>Food spending peaks on Fridays and Sundays</li>
+                <li>Entertainment spending is highest in the first week of the month</li>
+                <li>You're consistent with housing and transportation costs</li>
+                <li>Impulse purchases often happen after 8 PM</li>
+              </ul>
+            </div>
+            <p style="margin: 0.5rem 0 0 0; color: #666;">💡 <strong>Insight:</strong> Consider meal prepping on Sundays to reduce weekend food spending!</p>
+          `;
+        } else {
+          return `
+            <p style="margin: 0; color: #333;">I'm here to help with your finances! You can ask me about:</p>
+            <ul style="margin: 0.5rem 0 0 0; padding-left: 1.5rem; color: #666;">
+              <li>Spending analysis and patterns</li>
+              <li>Budget creation and optimization</li>
+              <li>Savings strategies and goals</li>
+              <li>Investment advice and planning</li>
+              <li>Financial education and concepts</li>
+            </ul>
+            <p style="margin: 0.5rem 0 0 0; color: #666;">What would you like to know more about?</p>
+          `;
+        }
+      }
+    </script>
+  </body>
+</html> 

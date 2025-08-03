@@ -490,6 +490,18 @@
         box-shadow: 0 8px 20px rgba(0,0,0,0.1);
       }
       
+      /* Manage button active state */
+      #banks .manage-btn.manage-active {
+        background: linear-gradient(135deg, #ef4444, #dc2626) !important;
+        box-shadow: 0 6px 20px rgba(239, 68, 68, 0.25) !important;
+        transform: scale(1.05);
+      }
+      
+      #banks .manage-btn.manage-active:hover {
+        transform: scale(1.05) translateY(-2px);
+        box-shadow: 0 8px 25px rgba(239, 68, 68, 0.35) !important;
+      }
+      
       /* Account Info Enhancements */
       .account-info {
         flex: 1;
@@ -562,6 +574,21 @@
         }
         100% {
           box-shadow: 0 2px 6px rgba(76, 175, 80, 0.3);
+        }
+      }
+      
+      @keyframes statusPulse {
+        0% {
+          opacity: 1;
+          transform: scale(1);
+        }
+        50% {
+          opacity: 0.7;
+          transform: scale(1.2);
+        }
+        100% {
+          opacity: 1;
+          transform: scale(1);
         }
       }
       
@@ -806,16 +833,44 @@
       /* AI Chat Mobile Responsive */
       @media (max-width: 767px) {
         #ai-chat .dashboard-card {
-          height: 500px;
+          height: calc(100vh - 8rem);
+          padding: 0;
+        }
+        
+        #ai-chat .dashboard-card > div:first-child {
+          flex-direction: column;
+          gap: 1rem;
+          padding: 1rem;
+          margin-bottom: 1rem;
+        }
+        
+        #ai-chat .dashboard-card > div:first-child > div {
+          flex: 1;
+          padding: 1.5rem;
+        }
+        
+        #ai-chat .card-header {
+          padding: 1.5rem;
+          margin-bottom: 1rem;
+        }
+        
+        #ai-chat .card-title {
+          font-size: 1.4rem;
+        }
+        
+        #ai-chat .card-title i {
+          font-size: 1.5rem;
+          margin-right: 0.75rem;
         }
         
         #chat-messages {
-          max-height: 300px;
-          padding: 0.75rem;
+          flex: 1;
+          padding: 1.5rem;
+          margin-bottom: 1rem;
         }
         
         #chat-messages > div {
-          margin-bottom: 0.75rem;
+          margin-bottom: 2rem;
         }
         
         #chat-messages > div:last-child {
@@ -824,14 +879,234 @@
         
         #chat-messages .user-avatar,
         #chat-messages > div > div:first-child {
-          width: 30px;
-          height: 30px;
+          width: 60px;
+          height: 60px;
+          margin-right: 1rem;
+        }
+        
+        #chat-messages .user-avatar i,
+        #chat-messages > div > div:first-child i {
+          font-size: 1.5rem;
+        }
+        
+        #chat-messages > div > div:last-child {
+          padding: 1.5rem;
+          max-width: 85%;
+        }
+        
+        #chat-messages > div > div:last-child p {
+          font-size: 1.1rem;
+          line-height: 1.5;
+        }
+        
+        #chat-messages > div > div:last-child ul {
+          padding-left: 1.5rem;
+        }
+        
+        #chat-messages > div > div:last-child li {
+          font-size: 1rem;
+          margin-bottom: 0.5rem;
+        }
+        
+        .chat-input-container {
+          padding: 1rem;
+          margin-bottom: 1rem;
+        }
+        
+        #chat-input {
+          padding: 1rem 1.25rem;
+          font-size: 1rem;
+          min-height: 50px;
+        }
+        
+        #ai-chat button {
+          padding: 1rem 1.5rem;
+          font-size: 1rem;
+        }
+        
+        .send-button {
+          min-width: 50px;
+          min-height: 50px;
+        }
+        
+        .send-button i {
+          font-size: 1.2rem;
+        }
+        
+        #ai-chat .quick-actions {
+          gap: 0.75rem;
+          margin-top: 1rem;
+          padding: 0 1rem;
+        }
+        
+        #ai-chat .quick-actions button {
+          padding: 0.75rem 1rem;
+          font-size: 0.9rem;
+        }
+      }
+      
+      @media (max-width: 575px) {
+        #ai-chat .dashboard-card {
+          height: calc(100vh - 8rem);
+          padding: 0;
+        }
+        
+        #ai-chat .dashboard-card > div:first-child {
+          flex-direction: column;
+          gap: 0.75rem;
+          padding: 0.75rem;
+          margin-bottom: 0.75rem;
+        }
+        
+        #ai-chat .dashboard-card > div:first-child > div {
+          flex: 1;
+          padding: 1rem;
+        }
+        
+        #ai-chat .card-header {
+          padding: 1rem;
+          margin-bottom: 0.75rem;
+        }
+        
+        #ai-chat .card-title {
+          font-size: 1.2rem;
+        }
+        
+        #ai-chat .card-title i {
+          font-size: 1.3rem;
+          margin-right: 0.5rem;
+        }
+        
+        #chat-messages {
+          flex: 1;
+          padding: 1rem;
+          margin-bottom: 0.75rem;
+        }
+        
+        #chat-messages > div {
+          margin-bottom: 1.5rem;
+        }
+        
+        #chat-messages .user-avatar,
+        #chat-messages > div > div:first-child {
+          width: 50px;
+          height: 50px;
+          margin-right: 0.75rem;
+        }
+        
+        #chat-messages .user-avatar i,
+        #chat-messages > div > div:first-child i {
+          font-size: 1.2rem;
+        }
+        
+        #chat-messages > div > div:last-child {
+          padding: 1rem;
+          max-width: 85%;
+        }
+        
+        #chat-messages > div > div:last-child p {
+          font-size: 1rem;
+          line-height: 1.4;
+        }
+        
+        #chat-messages > div > div:last-child ul {
+          padding-left: 1.25rem;
+        }
+        
+        #chat-messages > div > div:last-child li {
+          font-size: 0.9rem;
+          margin-bottom: 0.5rem;
+        }
+        
+        .chat-input-container {
+          padding: 0.75rem;
+          margin-bottom: 0.75rem;
+        }
+        
+        #chat-input {
+          padding: 0.75rem 1rem;
+          font-size: 0.9rem;
+          min-height: 45px;
+        }
+        
+        #ai-chat button {
+          padding: 0.75rem 1.25rem;
+          font-size: 0.9rem;
+        }
+        
+        .send-button {
+          min-width: 45px;
+          min-height: 45px;
+        }
+        
+        .send-button i {
+          font-size: 1rem;
+        }
+        
+        #ai-chat .quick-actions {
+          gap: 0.5rem;
+          margin-top: 0.75rem;
+          padding: 0 0.75rem;
+        }
+        
+        #ai-chat .quick-actions button {
+          padding: 0.6rem 0.8rem;
+          font-size: 0.8rem;
+        }
+      }
+      
+      @media (max-width: 480px) {
+        #ai-chat .dashboard-card {
+          height: calc(100vh - 8rem);
+          padding: 0;
+        }
+        
+        #ai-chat .dashboard-card > div:first-child {
+          flex-direction: column;
+          gap: 0.5rem;
+          padding: 0.5rem;
+          margin-bottom: 0.5rem;
+        }
+        
+        #ai-chat .dashboard-card > div:first-child > div {
+          flex: 1;
+          padding: 0.75rem;
+        }
+        
+        #ai-chat .card-header {
+          padding: 0.75rem;
+          margin-bottom: 0.5rem;
+        }
+        
+        #ai-chat .card-title {
+          font-size: 1.1rem;
+        }
+        
+        #ai-chat .card-title i {
+          font-size: 1.2rem;
+          margin-right: 0.5rem;
+        }
+        
+        #chat-messages {
+          flex: 1;
+          padding: 0.75rem;
+          margin-bottom: 0.5rem;
+        }
+        
+        #chat-messages > div {
+          margin-bottom: 1rem;
+        }
+        
+        #chat-messages .user-avatar,
+        #chat-messages > div > div:first-child {
+          width: 40px;
+          height: 40px;
           margin-right: 0.5rem;
         }
         
         #chat-messages .user-avatar i,
         #chat-messages > div > div:first-child i {
-          font-size: 0.8rem;
+          font-size: 1rem;
         }
         
         #chat-messages > div > div:last-child {
@@ -850,80 +1125,316 @@
         
         #chat-messages > div > div:last-child li {
           font-size: 0.8rem;
+          margin-bottom: 0.5rem;
+        }
+        
+        .chat-input-container {
+          padding: 0.5rem;
+          margin-bottom: 0.5rem;
         }
         
         #chat-input {
-          padding: 0.6rem;
-          font-size: 0.9rem;
+          padding: 0.6rem 0.75rem;
+          font-size: 0.85rem;
+          min-height: 40px;
         }
         
         #ai-chat button {
           padding: 0.6rem 1rem;
+          font-size: 0.85rem;
+        }
+        
+        .send-button {
+          min-width: 40px;
+          min-height: 40px;
+        }
+        
+        .send-button i {
+          font-size: 0.9rem;
         }
         
         #ai-chat .quick-actions {
-          gap: 0.3rem;
-          margin-top: 0.75rem;
+          gap: 0.4rem;
+          margin-top: 0.5rem;
+          padding: 0 0.5rem;
         }
         
         #ai-chat .quick-actions button {
-          padding: 0.4rem 0.8rem;
-          font-size: 0.8rem;
+          padding: 0.5rem 0.7rem;
+          font-size: 0.75rem;
+        }
+      }
+
+      /* Instagram Style Chat Mobile Responsive */
+      @media (max-width: 767px) {
+        #ai-chat .dashboard-grid {
+          height: calc(100vh - 6rem);
+          padding: 0.8rem;
+          gap: 0.8rem;
+        }
+
+        .chat-header {
+          padding: 1.2rem !important;
+        }
+
+        .ai-avatar {
+          width: 45px !important;
+          height: 45px !important;
+        }
+
+        .ai-info h3 {
+          font-size: 1.2rem !important;
+        }
+
+        .chat-messages {
+          padding: 1.2rem !important;
+        }
+
+        .message-content {
+          max-width: 85% !important;
+          padding: 0.9rem 1rem !important;
+        }
+
+        .chat-input-area {
+          padding: 0.8rem 1.2rem !important;
+        }
+
+        .attachment-btn, .send-btn {
+          width: 42px !important;
+          height: 42px !important;
+        }
+      }
+
+      @media (max-width: 575px) {
+        #ai-chat .dashboard-grid {
+          height: calc(100vh - 5rem);
+          padding: 0.6rem;
+          gap: 0.6rem;
+        }
+
+        .chat-header {
+          padding: 1rem !important;
+        }
+
+        .ai-avatar {
+          width: 40px !important;
+          height: 40px !important;
+        }
+
+        .ai-info h3 {
+          font-size: 1.1rem !important;
+        }
+
+        .chat-messages {
+          padding: 1rem !important;
+        }
+
+        .message-content {
+          max-width: 90% !important;
+          padding: 0.8rem 0.9rem !important;
+        }
+
+        .chat-input-area {
+          padding: 0.7rem 1rem !important;
+        }
+
+        .attachment-btn, .send-btn {
+          width: 40px !important;
+          height: 40px !important;
+        }
+      }
+
+      @media (max-width: 480px) {
+        #ai-chat .dashboard-grid {
+          height: calc(100vh - 4rem);
+          padding: 0.5rem;
+          gap: 0.5rem;
+        }
+
+        .chat-header {
+          padding: 0.8rem !important;
+        }
+
+        .ai-avatar {
+          width: 35px !important;
+          height: 35px !important;
+        }
+
+        .ai-info h3 {
+          font-size: 1rem !important;
+        }
+
+        .chat-messages {
+          padding: 0.8rem !important;
+        }
+
+        .message-content {
+          max-width: 95% !important;
+          padding: 0.7rem 0.8rem !important;
+        }
+
+        .chat-input-area {
+          padding: 0.6rem 0.8rem !important;
+        }
+
+        .attachment-btn, .send-btn {
+          width: 38px !important;
+          height: 38px !important;
         }
       }
       
-      @media (max-width: 575px) {
-        #ai-chat .dashboard-card {
-          height: 450px;
+      /* AI Chat Hover Effects and Animations */
+      #ai-chat .dashboard-card > div:first-child > div:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 15px 50px rgba(0,0,0,0.12);
+      }
+      
+      #ai-chat .card-header button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(48, 86, 211, 0.35);
+      }
+      
+      #ai-chat .quick-action-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(48, 86, 211, 0.15);
+      }
+      
+      #ai-chat .quick-action-btn:active {
+        transform: translateY(0);
+      }
+      
+      /* AI Chat Message Animations */
+      #chat-messages > div {
+        animation: messageSlideIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+      
+      @keyframes messageSlideIn {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
         }
-        
-        #chat-messages {
-          max-height: 250px;
-          padding: 0.5rem;
+        to {
+          opacity: 1;
+          transform: translateY(0);
         }
-        
-        #chat-messages .user-avatar,
-        #chat-messages > div > div:first-child {
-          width: 25px;
-          height: 25px;
-          margin-right: 0.4rem;
+      }
+
+      /* Instagram Style Chat Interface */
+      .chat-header {
+        transition: all 0.3s ease;
+      }
+
+      .chat-header:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 12px 40px rgba(102, 126, 234, 0.4);
+      }
+
+      .action-btn:hover {
+        background: rgba(255, 255, 255, 0.3) !important;
+        transform: scale(1.1);
+      }
+
+      .chat-messages {
+        scrollbar-width: thin;
+        scrollbar-color: rgba(102, 126, 234, 0.3) transparent;
+      }
+
+      .chat-messages::-webkit-scrollbar {
+        width: 6px;
+      }
+
+      .chat-messages::-webkit-scrollbar-track {
+        background: transparent;
+      }
+
+      .chat-messages::-webkit-scrollbar-thumb {
+        background: rgba(102, 126, 234, 0.3);
+        border-radius: 3px;
+      }
+
+      .message {
+        transition: all 0.3s ease;
+      }
+
+      .message:hover {
+        transform: translateX(5px);
+      }
+
+      .user-message:hover {
+        transform: translateX(-5px);
+      }
+
+      .message-content {
+        transition: all 0.3s ease;
+      }
+
+      .message-content:hover {
+        transform: scale(1.02);
+      }
+
+      .attachment-btn:hover {
+        transform: scale(1.1);
+        box-shadow: 0 6px 20px rgba(240, 147, 251, 0.4) !important;
+      }
+
+      .send-btn:hover {
+        transform: scale(1.1);
+        box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4) !important;
+      }
+
+      .send-btn:active {
+        transform: scale(0.95);
+      }
+
+      .send-btn i {
+        transition: transform 0.3s ease;
+      }
+
+      .send-btn:hover i {
+        transform: translateX(2px);
+      }
+
+      #messageInput {
+        transition: all 0.3s ease;
+      }
+
+      #messageInput:focus {
+        background: white !important;
+        box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        transform: scale(1.02);
+      }
+
+      /* Typing Indicator */
+      .typing-indicator {
+        display: flex;
+        gap: 0.3rem;
+        padding: 1rem 1.2rem;
+        background: white;
+        border-radius: 18px;
+        border-bottom-left-radius: 5px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        max-width: 80px;
+      }
+
+      .typing-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: #ccc;
+        animation: typingBounce 1.4s infinite ease-in-out;
+      }
+
+      .typing-dot:nth-child(1) { animation-delay: -0.32s; }
+      .typing-dot:nth-child(2) { animation-delay: -0.16s; }
+
+      @keyframes typingBounce {
+        0%, 80%, 100% {
+          transform: scale(0.8);
+          opacity: 0.5;
         }
-        
-        #chat-messages .user-avatar i,
-        #chat-messages > div > div:first-child i {
-          font-size: 0.7rem;
-        }
-        
-        #chat-messages > div > div:last-child {
-          padding: 0.6rem;
-          max-width: 90%;
-        }
-        
-        #chat-messages > div > div:last-child p {
-          font-size: 0.8rem;
-        }
-        
-        #chat-messages > div > div:last-child li {
-          font-size: 0.7rem;
-        }
-        
-        #chat-input {
-          padding: 0.5rem;
-          font-size: 0.8rem;
-        }
-        
-        #ai-chat button {
-          padding: 0.5rem 0.8rem;
-        }
-        
-        #ai-chat .quick-actions {
-          gap: 0.2rem;
-          margin-top: 0.5rem;
-        }
-        
-        #ai-chat .quick-actions button {
-          padding: 0.3rem 0.6rem;
-          font-size: 0.7rem;
+        40% {
+          transform: scale(1);
+          opacity: 1;
         }
       }
       
@@ -2678,6 +3189,78 @@
         flex-direction: column;
       }
       
+      /* Enhanced Hover Effects for Bank Accounts */
+      #banks .account-item:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+        border-color: rgba(48, 86, 211, 0.3);
+      }
+      
+      #banks .account-item:hover .account-icon {
+        transform: scale(1.1) rotate(5deg);
+        box-shadow: 0 12px 35px rgba(0, 0, 0, 0.25);
+      }
+      
+      #banks .add-bank-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 20px 60px rgba(48, 86, 211, 0.2);
+        border-color: #3056d3;
+      }
+      
+      #banks .add-bank-card:hover .add-bank-icon {
+        transform: scale(1.15) rotate(10deg);
+        box-shadow: 0 20px 60px rgba(48, 86, 211, 0.4);
+      }
+      
+      #banks .add-bank-card:hover .add-bank-icon i {
+        transform: rotate(90deg) scale(1.2);
+      }
+      
+      #banks .manage-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(48, 86, 211, 0.35);
+      }
+      
+      #banks .add-bank-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 30px rgba(48, 86, 211, 0.4);
+      }
+      
+      #banks .add-bank-btn:hover::before {
+        left: 100%;
+      }
+      
+      /* Enhanced Selection Animation */
+      #banks .account-item.selected {
+        animation: selectPulse 0.6s ease-out;
+      }
+      
+      @keyframes selectPulse {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.02); }
+        100% { transform: scale(1); }
+      }
+      
+      /* Enhanced Loading States */
+      #banks .account-item.loading {
+        opacity: 0.7;
+        pointer-events: none;
+      }
+      
+      #banks .account-item.loading::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 20px;
+        height: 20px;
+        border: 2px solid #f3f3f3;
+        border-top: 2px solid #3056d3;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+        transform: translate(-50%, -50%);
+      }
+      
       #banks .dashboard-grid {
         display: flex;
         flex-direction: column;
@@ -2852,6 +3435,9 @@
       #banks .account-info {
         flex: 1;
         min-width: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
       }
       
       #banks .account-name {
@@ -2860,12 +3446,18 @@
         color: #2d3748;
         margin-bottom: 0.5rem;
         line-height: 1.3;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
       
       #banks .account-number {
         font-size: 1rem;
         color: #718096;
         font-weight: 500;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
       
       #banks .account-balance {
@@ -2929,6 +3521,52 @@
       #banks .delete-bank-btn:hover {
         transform: scale(1.1);
         box-shadow: 0 6px 20px rgba(239, 68, 68, 0.4);
+      }
+      
+      /* Enhanced Delete Button Animations */
+      #banks .delete-bank-btn {
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+        overflow: hidden;
+      }
+      
+      #banks .delete-bank-btn::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 0;
+        height: 0;
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 50%;
+        transform: translate(-50%, -50%);
+        transition: width 0.3s ease, height 0.3s ease;
+      }
+      
+      #banks .delete-bank-btn:hover::before {
+        width: 100%;
+        height: 100%;
+      }
+      
+      #banks .delete-bank-btn:active {
+        transform: scale(0.95);
+      }
+      
+      /* Modal Button Hover Effects */
+      #cancel-delete:hover {
+        background: #e2e8f0 !important;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      }
+      
+      #confirm-delete:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(239, 68, 68, 0.35);
+      }
+      
+      #cancel-delete:active,
+      #confirm-delete:active {
+        transform: translateY(0);
       }
       
       #banks .connection-status {
@@ -3117,6 +3755,7 @@
         #banks .dashboard-grid {
           padding: 0.5rem;
           gap: 0.5rem;
+          height: calc(100vh - 6rem);
         }
         
         #banks .dashboard-card {
@@ -3139,9 +3778,16 @@
           margin-right: 0.5rem;
         }
         
+        #banks .manage-btn {
+          padding: 0.875rem 1.75rem;
+          font-size: 0.9rem;
+          border-radius: 12px;
+        }
+        
         #banks .account-item {
           padding: 1.5rem;
           border-radius: 12px;
+          margin-bottom: 1.25rem;
         }
         
         #banks .account-icon {
@@ -3160,6 +3806,36 @@
         
         #banks .account-balance {
           font-size: 1.2rem;
+        }
+        
+        #banks .bank-selection-indicator {
+          width: 24px;
+          height: 24px;
+          top: 1.25rem;
+          right: 1.25rem;
+          font-size: 0.9rem;
+        }
+        
+        #banks .delete-bank-btn {
+          width: 32px;
+          height: 32px;
+          top: 1.25rem;
+          right: 1.25rem;
+          font-size: 0.9rem;
+        }
+        
+        #banks .connection-status {
+          padding: 1.25rem;
+          border-radius: 12px;
+          margin-top: 1.75rem;
+        }
+        
+        #banks .status-label {
+          font-size: 0.9rem;
+        }
+        
+        #banks .status-text {
+          font-size: 0.85rem;
         }
         
         #banks .add-bank-card {
@@ -3201,10 +3877,11 @@
         #banks .dashboard-grid {
           padding: 0.375rem;
           gap: 0.375rem;
+          height: calc(100vh - 5rem);
         }
          
          #banks .dashboard-card {
-           padding: 2rem;
+           padding: 1.5rem;
            border-radius: 12px;
            flex: 0.7;
          }
@@ -3230,7 +3907,7 @@
         }
         
         #banks .account-item {
-          padding: 1.5rem;
+          padding: 1.25rem;
           border-radius: 10px;
           margin-bottom: 1rem;
         }
@@ -3255,6 +3932,22 @@
         
         #banks .account-balance {
           font-size: 1.2rem;
+        }
+        
+        #banks .bank-selection-indicator {
+          width: 22px;
+          height: 22px;
+          top: 1rem;
+          right: 1rem;
+          font-size: 0.8rem;
+        }
+        
+        #banks .delete-bank-btn {
+          width: 30px;
+          height: 30px;
+          top: 1rem;
+          right: 1rem;
+          font-size: 0.8rem;
         }
         
         #banks .connection-status {
@@ -3313,10 +4006,11 @@
         #banks .dashboard-grid {
           padding: 0.25rem;
           gap: 0.25rem;
+          height: calc(100vh - 4rem);
         }
         
         #banks .dashboard-card {
-          padding: 1.5rem;
+          padding: 1.25rem;
           border-radius: 10px;
           flex: 0.7;
          }
@@ -3437,6 +4131,137 @@
         #banks .dashboard-grid {
           padding: 0.125rem;
           gap: 0.125rem;
+          height: calc(100vh - 3rem);
+        }
+        
+        #banks .dashboard-card {
+          padding: 1rem;
+          border-radius: 8px;
+          flex: 0.7;
+        }
+        
+        #banks .card-header {
+          margin-bottom: 1rem;
+          padding-bottom: 0.75rem;
+        }
+        
+        #banks .card-title {
+          font-size: 1.1rem;
+        }
+        
+        #banks .card-title i {
+          font-size: 1.3rem;
+          margin-right: 0.35rem;
+        }
+        
+        #banks .manage-btn {
+          padding: 0.5rem 1rem;
+          font-size: 0.8rem;
+          border-radius: 6px;
+        }
+        
+        #banks .account-item {
+          padding: 0.875rem;
+          border-radius: 6px;
+          margin-bottom: 0.75rem;
+        }
+        
+        #banks .account-icon {
+          width: 45px;
+          height: 45px;
+          font-size: 1.1rem;
+        }
+        
+        #banks .account-name {
+          font-size: 0.95rem;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+        
+        #banks .account-number {
+          font-size: 0.8rem;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+        
+        #banks .account-balance {
+          font-size: 1rem;
+        }
+        
+        #banks .bank-selection-indicator {
+          width: 18px;
+          height: 18px;
+          top: 0.625rem;
+          right: 0.625rem;
+          font-size: 0.65rem;
+        }
+        
+        #banks .delete-bank-btn {
+          width: 24px;
+          height: 24px;
+          top: 0.625rem;
+          right: 0.625rem;
+          font-size: 0.65rem;
+        }
+        
+        #banks .connection-status {
+          padding: 0.875rem;
+          border-radius: 6px;
+          margin-top: 1rem;
+        }
+        
+        #banks .status-label {
+          font-size: 0.75rem;
+        }
+        
+        #banks .status-text {
+          font-size: 0.7rem;
+        }
+        
+        #banks .add-bank-card {
+          border-radius: 8px;
+          padding: 0.875rem;
+          flex: 0.8;
+        }
+        
+        #banks .add-bank-content {
+          padding: 1rem;
+        }
+        
+        #banks .add-bank-icon {
+          width: 50px;
+          height: 50px;
+          margin-bottom: 0.875rem;
+        }
+        
+        #banks .add-bank-icon i {
+          font-size: 1.25rem;
+        }
+        
+        #banks .add-bank-title {
+          font-size: 0.9rem;
+          margin-bottom: 0.5rem;
+        }
+        
+        #banks .add-bank-description {
+          font-size: 0.75rem;
+          margin-bottom: 0.875rem;
+          max-width: 180px;
+        }
+        
+        #banks .add-bank-btn {
+          padding: 0.5rem 1rem;
+          font-size: 0.75rem;
+          border-radius: 6px;
+        }
+      }
+      
+      @media (max-width: 480px) {
+        #banks .dashboard-grid {
+          padding: 0.125rem;
+          gap: 0.125rem;
         }
         
         #banks .dashboard-card {
@@ -3479,10 +4304,16 @@
         
         #banks .account-name {
           font-size: 0.95rem;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
         }
         
         #banks .account-number {
           font-size: 0.8rem;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
         }
         
         #banks .account-balance {
@@ -3984,207 +4815,222 @@
 
       <!-- Bank Accounts Section -->
       <div id="banks" class="dashboard-section" style="display: none;">
-        <div class="dashboard-grid">
-          <div class="dashboard-card">
-            <div class="card-header">
-              <h3 class="card-title">
-                <i class="lni lni-bank" style="color: #3056d3; margin-right: 0.5rem;"></i>
+        <div class="dashboard-grid" style="display: flex; flex-direction: column; gap: 1rem; height: calc(100vh - 8rem); padding: 0;">
+          <!-- Connected Banks Card -->
+          <div class="dashboard-card" style="flex: 0.6; background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%); border: 1px solid rgba(48, 86, 211, 0.1); border-radius: 20px; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08); padding: 2rem; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); position: relative; overflow: hidden;">
+            <div class="card-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; padding-bottom: 1.5rem; border-bottom: 1px solid rgba(48, 86, 211, 0.1);">
+              <h3 class="card-title" style="display: flex; align-items: center; font-size: 1.8rem; font-weight: 700; color: #2d3748; margin: 0;">
+                <i class="lni lni-bank" style="font-size: 2rem; margin-right: 1rem; background: linear-gradient(135deg, #3056d3, #13c296); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;"></i>
                 Connected Banks
               </h3>
-              <button id="manage-btn" onclick="toggleManageMode()" class="manage-btn">Manage</button>
+              <button id="manage-btn" onclick="toggleManageMode()" class="manage-btn" style="background: linear-gradient(135deg, #3056d3, #13c296); color: white; border: none; padding: 1rem 2rem; border-radius: 15px; font-weight: 600; font-size: 1rem; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 6px 20px rgba(48, 86, 211, 0.25);">Manage</button>
             </div>
-            <div class="account-item" onclick="selectBank('deutsche')" id="bank-deutsche">
-              <div class="account-icon deutsche-bank">
+            
+            <div class="account-item" onclick="selectBank('deutsche')" id="bank-deutsche" style="background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%); border: 1px solid rgba(48, 86, 211, 0.08); border-radius: 18px; padding: 2rem; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 1.5rem; cursor: pointer; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); position: relative; overflow: hidden;">
+              <div class="account-icon deutsche-bank" style="width: 80px; height: 80px; border-radius: 16px; background: linear-gradient(135deg, #1e3a8a, #3b82f6); display: flex; align-items: center; justify-content: center; font-size: 2.2rem; color: white; flex-shrink: 0; transition: all 0.3s ease; position: relative; overflow: hidden; box-shadow: 0 8px 25px rgba(30, 58, 138, 0.3);">
                 <i class="lni lni-euro"></i>
               </div>
-              <div class="account-info">
-                <div class="account-name">Deutsche Bank</div>
-                <div class="account-number">Checking Account • ****1234</div>
+              <div class="account-info" style="flex: 1; min-width: 0; display: flex; flex-direction: column; justify-content: center;">
+                <div class="account-name" style="font-size: 1.5rem; font-weight: 700; color: #2d3748; margin-bottom: 0.75rem; line-height: 1.3; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Deutsche Bank</div>
+                <div class="account-number" style="font-size: 1.1rem; color: #718096; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Checking Account • ****1234</div>
               </div>
-              <div class="account-balance">€12,450.75</div>
-              <div class="bank-selection-indicator">
+              <div class="account-balance" style="font-size: 1.6rem; font-weight: 700; color: #2d3748; text-align: right; margin-left: auto; flex-shrink: 0;">€12,450.75</div>
+              <div class="bank-selection-indicator" style="position: absolute; top: 1.5rem; right: 1.5rem; width: 28px; height: 28px; background: linear-gradient(135deg, #3056d3, #13c296); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 1rem; opacity: 0; transform: scale(0); transition: all 0.3s ease;">
                 <i class="lni lni-checkmark"></i>
               </div>
-              <button class="delete-bank-btn" onclick="deleteBank('deutsche', event)">
+              <button class="delete-bank-btn" onclick="deleteBank('deutsche', event)" style="position: absolute; top: 1.5rem; right: 1.5rem; width: 36px; height: 36px; background: linear-gradient(135deg, #ef4444, #dc2626); border: none; border-radius: 50%; color: white; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 1rem; opacity: 0; transform: scale(0); transition: all 0.3s ease; box-shadow: 0 6px 20px rgba(239, 68, 68, 0.3);">
                 <i class="lni lni-trash-can"></i>
               </button>
             </div>
-            <div class="account-item" onclick="selectBank('commerz')" id="bank-commerz">
-              <div class="account-icon commerzbank">
+            
+            <div class="account-item" onclick="selectBank('commerz')" id="bank-commerz" style="background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%); border: 1px solid rgba(48, 86, 211, 0.08); border-radius: 18px; padding: 2rem; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 1.5rem; cursor: pointer; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); position: relative; overflow: hidden;">
+              <div class="account-icon commerzbank" style="width: 80px; height: 80px; border-radius: 16px; background: linear-gradient(135deg, #059669, #10b981); display: flex; align-items: center; justify-content: center; font-size: 2.2rem; color: white; flex-shrink: 0; transition: all 0.3s ease; position: relative; overflow: hidden; box-shadow: 0 8px 25px rgba(5, 150, 105, 0.3);">
                 <i class="lni lni-credit-cards"></i>
               </div>
-              <div class="account-info">
-                <div class="account-name">Commerzbank</div>
-                <div class="account-number">Savings Account • ****5678</div>
+              <div class="account-info" style="flex: 1; min-width: 0; display: flex; flex-direction: column; justify-content: center;">
+                <div class="account-name" style="font-size: 1.5rem; font-weight: 700; color: #2d3748; margin-bottom: 0.75rem; line-height: 1.3; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Commerzbank</div>
+                <div class="account-number" style="font-size: 1.1rem; color: #718096; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Savings Account • ****5678</div>
               </div>
-              <div class="account-balance">€8,230.50</div>
-              <div class="bank-selection-indicator">
+              <div class="account-balance" style="font-size: 1.6rem; font-weight: 700; color: #2d3748; text-align: right; margin-left: auto; flex-shrink: 0;">€8,230.50</div>
+              <div class="bank-selection-indicator" style="position: absolute; top: 1.5rem; right: 1.5rem; width: 28px; height: 28px; background: linear-gradient(135deg, #3056d3, #13c296); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 1rem; opacity: 0; transform: scale(0); transition: all 0.3s ease;">
                 <i class="lni lni-checkmark"></i>
               </div>
-              <button class="delete-bank-btn" onclick="deleteBank('commerz', event)">
+              <button class="delete-bank-btn" onclick="deleteBank('commerz', event)" style="position: absolute; top: 1.5rem; right: 1.5rem; width: 36px; height: 36px; background: linear-gradient(135deg, #ef4444, #dc2626); border: none; border-radius: 50%; color: white; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 1rem; opacity: 0; transform: scale(0); transition: all 0.3s ease; box-shadow: 0 6px 20px rgba(239, 68, 68, 0.3);">
                 <i class="lni lni-trash-can"></i>
               </button>
             </div>
-            <div class="account-item" onclick="selectBank('n26')" id="bank-n26">
-              <div class="account-icon n26-bank">
+            
+            <div class="account-item" onclick="selectBank('n26')" id="bank-n26" style="background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%); border: 1px solid rgba(48, 86, 211, 0.08); border-radius: 18px; padding: 2rem; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 1.5rem; cursor: pointer; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); position: relative; overflow: hidden;">
+              <div class="account-icon n26-bank" style="width: 80px; height: 80px; border-radius: 16px; background: linear-gradient(135deg, #7c3aed, #a855f7); display: flex; align-items: center; justify-content: center; font-size: 2.2rem; color: white; flex-shrink: 0; transition: all 0.3s ease; position: relative; overflow: hidden; box-shadow: 0 8px 25px rgba(124, 58, 237, 0.3);">
                 <i class="lni lni-credit-cards"></i>
               </div>
-              <div class="account-info">
-                <div class="account-name">N26</div>
-                <div class="account-number">Credit Card • ****9012</div>
+              <div class="account-info" style="flex: 1; min-width: 0; display: flex; flex-direction: column; justify-content: center;">
+                <div class="account-name" style="font-size: 1.5rem; font-weight: 700; color: #2d3748; margin-bottom: 0.75rem; line-height: 1.3; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">N26</div>
+                <div class="account-number" style="font-size: 1.1rem; color: #718096; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Credit Card • ****9012</div>
               </div>
-              <div class="account-balance">€3,900.00</div>
-              <div class="bank-selection-indicator">
+              <div class="account-balance" style="font-size: 1.6rem; font-weight: 700; color: #2d3748; text-align: right; margin-left: auto; flex-shrink: 0;">€3,900.00</div>
+              <div class="bank-selection-indicator" style="position: absolute; top: 1.5rem; right: 1.5rem; width: 28px; height: 28px; background: linear-gradient(135deg, #3056d3, #13c296); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 1rem; opacity: 0; transform: scale(0); transition: all 0.3s ease;">
                 <i class="lni lni-checkmark"></i>
               </div>
-              <button class="delete-bank-btn" onclick="deleteBank('n26', event)">
+              <button class="delete-bank-btn" onclick="deleteBank('n26', event)" style="position: absolute; top: 1.5rem; right: 1.5rem; width: 36px; height: 36px; background: linear-gradient(135deg, #ef4444, #dc2626); border: none; border-radius: 50%; color: white; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 1rem; opacity: 0; transform: scale(0); transition: all 0.3s ease; box-shadow: 0 6px 20px rgba(239, 68, 68, 0.3);">
                 <i class="lni lni-trash-can"></i>
               </button>
             </div>
-            <div class="connection-status">
-              <div class="status-label">Connection Status</div>
-              <div class="status-indicator">
-                <div class="status-dot"></div>
-                <span class="status-text">All accounts synced • Last sync: 2 min ago</span>
+            
+            <div class="connection-status" style="background: linear-gradient(135deg, rgba(48, 86, 211, 0.05), rgba(19, 194, 150, 0.05)); border: 1px solid rgba(48, 86, 211, 0.1); border-radius: 15px; padding: 1.5rem; margin-top: 2rem;">
+              <div class="status-label" style="font-size: 1rem; font-weight: 600; color: #2d3748; margin-bottom: 0.75rem;">Connection Status</div>
+              <div class="status-indicator" style="display: flex; align-items: center; gap: 0.75rem;">
+                <div class="status-dot" style="width: 10px; height: 10px; background: #10b981; border-radius: 50%; animation: pulse 2s infinite;"></div>
+                <span class="status-text" style="font-size: 0.95rem; color: #718096; font-weight: 500;">All accounts synced • Last sync: 2 min ago</span>
               </div>
             </div>
           </div>
 
-          <div class="add-bank-card">
-            <div class="add-bank-content" onclick="connectBank()">
-              <div class="add-bank-icon">
-                <i class="lni lni-plus"></i>
+          <!-- Add Bank Card -->
+          <div class="add-bank-card" style="background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%); border: 2px dashed rgba(48, 86, 211, 0.3); border-radius: 20px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); position: relative; overflow: hidden; flex: 0.4; padding: 2rem;">
+            <div class="add-bank-content" onclick="connectBank()" style="text-align: center; padding: 2rem; position: relative; z-index: 1; width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+              <div class="add-bank-icon" style="width: 100px; height: 100px; background: linear-gradient(135deg, #3056d3, #13c296); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 2rem; box-shadow: 0 15px 50px rgba(48, 86, 211, 0.3); transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); position: relative; overflow: hidden;">
+                <i class="lni lni-plus" style="color: white; font-size: 2.5rem; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); position: relative; z-index: 1;"></i>
               </div>
-              <h4 class="add-bank-title">Connect New Bank</h4>
-              <p class="add-bank-description">Securely connect your bank account using Open Banking technology</p>
-              <button class="add-bank-btn">Connect Bank</button>
+              <h4 class="add-bank-title" style="font-size: 1.5rem; font-weight: 700; color: #2d3748; margin-bottom: 1rem; line-height: 1.3;">Connect New Bank</h4>
+              <p class="add-bank-description" style="font-size: 1.1rem; color: #718096; margin-bottom: 2rem; max-width: 300px; line-height: 1.6; font-weight: 500;">Securely connect your bank account using Open Banking technology</p>
+              <button class="add-bank-btn" style="background: linear-gradient(135deg, #3056d3, #13c296); color: white; border: none; padding: 1rem 2rem; border-radius: 15px; font-weight: 600; font-size: 1rem; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 8px 25px rgba(48, 86, 211, 0.25); position: relative; overflow: hidden;">Connect Bank</button>
             </div>
           </div>
         </div>
       </div>
 
-             <!-- AI Chat Section -->
-       <div id="ai-chat" class="dashboard-section" style="display: none;">
-         <div class="dashboard-card" style="min-height: 80vh; height: auto; display: flex; flex-direction: column; max-height: none;">
-           <!-- Top Section with Profile and Selected Bank Side by Side -->
-           <div style="display: flex; gap: 1.5rem; margin-bottom: 1.5rem; align-items: stretch;">
-             <!-- Profile Section -->
-             <div style="flex: 1; background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%); border-radius: 20px; border: 1px solid rgba(48, 86, 211, 0.1); box-shadow: 0 8px 30px rgba(0,0,0,0.1); padding: 1.5rem; display: flex; align-items: center; gap: 1rem;">
-               <div style="width: 50px; height: 50px; background: linear-gradient(135deg, #3056d3, #13c296); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; box-shadow: 0 6px 20px rgba(48, 86, 211, 0.25);">
-                 <i class="lni lni-user" style="color: white; font-size: 1.3rem;"></i>
-               </div>
-               <div style="flex: 1;">
-                 <div style="font-weight: 700; color: #333; font-size: 1.1rem; margin-bottom: 0.25rem;">John Doe</div>
-                 <div style="font-size: 0.9rem; color: #666;">Premium Member</div>
-               </div>
-               <div style="display: flex; align-items: center; padding: 0.5rem 1rem; background: rgba(76, 175, 80, 0.1); border-radius: 20px; border: 1px solid rgba(76, 175, 80, 0.2);">
-                 <div style="width: 8px; height: 8px; background: #4caf50; border-radius: 50%; margin-right: 0.5rem; animation: pulse 2s infinite;"></div>
-                 <span style="color: #4caf50; font-size: 0.9rem; font-weight: 600;">Online</span>
-               </div>
-             </div>
-             
-             <!-- Selected Bank Card Section -->
-             <div id="selected-bank-card" class="selected-bank-section" style="flex: 1; background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%); border-radius: 20px; border: 1px solid rgba(48, 86, 211, 0.1); box-shadow: 0 8px 30px rgba(0,0,0,0.1); padding: 1.5rem;">
-               <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.75rem;">
-                 <h5 style="margin: 0; color: #333; font-weight: 600; font-size: 0.9rem;">
-                   <i class="lni lni-bank" style="color: #3056d3; margin-right: 0.5rem;"></i>
-                   Active Account
-                 </h5>
-                 <div style="display: flex; align-items: center; gap: 0.5rem;">
-                   <div style="width: 6px; height: 6px; background: #4caf50; border-radius: 50%; animation: pulse 2s infinite;"></div>
-                   <span style="color: #4caf50; font-size: 0.75rem; font-weight: 500;">Connected</span>
-                 </div>
-               </div>
-               <div class="selected-bank-info" style="display: flex; align-items: center; gap: 1rem;">
-                 <div class="selected-bank-icon" style="width: 40px; height: 40px; background: linear-gradient(135deg, #3056d3, #13c296); border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
-                   <i class="lni lni-euro" style="color: white; font-size: 1rem;"></i>
-                 </div>
-                 <div style="flex: 1;">
-                   <div class="selected-bank-name" style="font-weight: 600; color: #333; margin-bottom: 0.25rem; font-size: 0.95rem;">Deutsche Bank</div>
-                   <div class="selected-bank-details" style="font-size: 0.8rem; color: #666;">Checking Account • ****1234</div>
-                 </div>
-                 <div class="selected-bank-balance" style="text-align: right;">
-                   <div style="font-weight: 700; color: #333; font-size: 1rem;">€12,450.75</div>
-                   <div style="font-size: 0.75rem; color: #4caf50; font-weight: 500;">+€1,240 this month</div>
-                 </div>
-               </div>
-             </div>
-           </div>
-           
-           <!-- AI Chat Header -->
-           <div class="card-header" style="padding: 1rem 1.5rem; border-bottom: 1px solid rgba(48, 86, 211, 0.1); background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%); border-radius: 20px 20px 0 0; margin-bottom: 1rem;">
-             <h3 class="card-title" style="font-size: 1.1rem; font-weight: 600; color: #333; margin: 0;">
-               <i class="lni lni-robot" style="color: #3056d3; margin-right: 0.5rem; font-size: 1.2rem;"></i>
-               AI Financial Assistant
-             </h3>
-             <button style="background: linear-gradient(135deg, #3056d3, #13c296); color: white; border: none; padding: 0.5rem 1rem; border-radius: 10px; font-size: 0.9rem; cursor: pointer; font-weight: 500; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(48, 86, 211, 0.2);" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(48, 86, 211, 0.3)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(48, 86, 211, 0.2)'">Clear Chat</button>
-           </div>
-           
-           <div id="chat-messages" style="flex: 1; overflow: visible; padding: 1.5rem; background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%); border-radius: 20px; margin-bottom: 1.5rem; height: auto; border: 1px solid rgba(48, 86, 211, 0.08); box-shadow: inset 0 2px 10px rgba(0,0,0,0.05);">
-             <!-- AI Welcome Message -->
-             <div style="display: flex; margin-bottom: 2rem;">
-               <div style="width: 48px; height: 48px; background: linear-gradient(135deg, #3056d3, #13c296); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 1.5rem; flex-shrink: 0; box-shadow: 0 6px 20px rgba(48, 86, 211, 0.25);">
-                 <i class="lni lni-robot" style="color: white; font-size: 1.2rem;"></i>
-               </div>
-               <div style="background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%); padding: 1.75rem; border-radius: 24px; box-shadow: 0 8px 30px rgba(0,0,0,0.1); max-width: 85%; border: 1px solid rgba(48, 86, 211, 0.08);">
-                 <p style="margin: 0; color: #333; font-weight: 600; font-size: 1.1rem; line-height: 1.5;">Hello! I'm your AI financial assistant. I can help you with:</p>
-                 <ul style="margin: 1rem 0 0 0; padding-left: 1.5rem; color: #555; line-height: 1.7; font-size: 1rem;">
-                   <li>Analyzing your spending patterns</li>
-                   <li>Creating budgets and savings plans</li>
-                   <li>Explaining financial concepts</li>
-                   <li>Providing investment advice</li>
-                   <li>Answering questions about your transactions</li>
-                 </ul>
-                 <p style="margin: 1rem 0 0 0; color: #666; font-weight: 500; font-size: 1rem;">How can I help you today?</p>
-               </div>
-             </div>
-             
-             <!-- User Message -->
-             <div style="display: flex; justify-content: flex-end; margin-bottom: 2rem;">
-               <div style="background: linear-gradient(135deg, #3056d3, #13c296); color: white; padding: 1.75rem; border-radius: 24px; max-width: 85%; box-shadow: 0 8px 30px rgba(48, 86, 211, 0.25);">
-                 <p style="margin: 0; font-weight: 600; font-size: 1.1rem; line-height: 1.5;">Can you analyze my spending this month?</p>
-               </div>
-             </div>
-             
-             <!-- AI Response -->
-             <div style="display: flex; margin-bottom: 2rem;">
-               <div style="width: 48px; height: 48px; background: linear-gradient(135deg, #3056d3, #13c296); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 1.5rem; flex-shrink: 0; box-shadow: 0 6px 20px rgba(48, 86, 211, 0.25);">
-                 <i class="lni lni-robot" style="color: white; font-size: 1.2rem;"></i>
-               </div>
-               <div style="background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%); padding: 1.75rem; border-radius: 24px; box-shadow: 0 8px 30px rgba(0,0,0,0.1); max-width: 85%; border: 1px solid rgba(48, 86, 211, 0.08);">
-                 <p style="margin: 0; color: #333; font-weight: 600; font-size: 1.1rem; line-height: 1.5;">Based on your spending this month, here's my analysis:</p>
-                 <div style="margin: 1rem 0; padding: 1.5rem; background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); border-radius: 16px; border: 1px solid rgba(48, 86, 211, 0.08);">
-                   <p style="margin: 0 0 1rem 0; color: #333; font-weight: 700; font-size: 1.05rem;">📊 Spending Summary:</p>
-                   <ul style="margin: 0; padding-left: 1.5rem; color: #555; line-height: 1.7; font-size: 1rem;">
-                     <li>Total spent: €3,420 (€180 more than last month)</li>
-                     <li>Biggest category: Food & Dining (36% - €1,240)</li>
-                     <li>You're 83% through your food budget</li>
-                     <li>Entertainment spending is approaching limit (80%)</li>
-                   </ul>
-                 </div>
-                 <p style="margin: 1rem 0 0 0; color: #666; font-weight: 500; font-size: 1rem;">💡 <strong>Recommendation:</strong> Consider meal planning to reduce food costs by €200+ monthly.</p>
-               </div>
-             </div>
-           </div>
-           
-           <div class="chat-input-container" style="display: flex; gap: 0.75rem; background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%); border-radius: 16px; padding: 0.75rem; border: 1px solid rgba(48, 86, 211, 0.1); box-shadow: 0 6px 20px rgba(0,0,0,0.08); margin-bottom: 1rem;">
-             <input type="text" id="chat-input" placeholder="Ask me anything about your finances..." style="flex: 1; padding: 1rem 1.25rem; border: none; border-radius: 12px; font-size: 1rem; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); background: transparent; outline: none; color: #333; font-weight: 400; min-height: 50px;" onkeypress="handleChatKeyPress(event)" onfocus="this.parentElement.style.boxShadow='0 8px 25px rgba(48, 86, 211, 0.15)'" onblur="this.parentElement.style.boxShadow='0 6px 20px rgba(0,0,0,0.08)'">
-             <button onclick="sendMessage()" class="send-button" style="background: linear-gradient(135deg, #3056d3, #13c296); color: white; border: none; padding: 1rem 1.25rem; border-radius: 12px; cursor: pointer; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 0 4px 15px rgba(48, 86, 211, 0.2); display: flex; align-items: center; justify-content: center; min-width: 50px; min-height: 50px;" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(48, 86, 211, 0.3)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(48, 86, 211, 0.2)'">
-               <i class="lni lni-arrow-right" style="font-size: 1.1rem;"></i>
-             </button>
-           </div>
-           
-           <div class="quick-actions" style="margin-top: 1rem; display: flex; gap: 0.75rem; flex-wrap: wrap; justify-content: center;">
-             <button onclick="quickQuestion('How can I save more money?')" class="quick-action-btn" style="background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%); border: 1px solid rgba(48, 86, 211, 0.1); padding: 0.75rem 1.25rem; border-radius: 25px; cursor: pointer; font-size: 0.9rem; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); font-weight: 500; color: #333; box-shadow: 0 3px 10px rgba(0,0,0,0.06);" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 5px 15px rgba(48, 86, 211, 0.12)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 3px 10px rgba(0,0,0,0.06)'">💡 Save Money</button>
-             <button onclick="quickQuestion('Create a budget plan')" class="quick-action-btn" style="background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%); border: 1px solid rgba(48, 86, 211, 0.1); padding: 0.75rem 1.25rem; border-radius: 25px; cursor: pointer; font-size: 0.9rem; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); font-weight: 500; color: #333; box-shadow: 0 3px 10px rgba(0,0,0,0.06);" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 5px 15px rgba(48, 86, 211, 0.12)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 3px 10px rgba(0,0,0,0.06)'">📋 Budget Plan</button>
-             <button onclick="quickQuestion('Investment advice')" class="quick-action-btn" style="background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%); border: 1px solid rgba(48, 86, 211, 0.1); padding: 0.75rem 1.25rem; border-radius: 25px; cursor: pointer; font-size: 0.9rem; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); font-weight: 500; color: #333; box-shadow: 0 3px 10px rgba(0,0,0,0.06);" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 5px 15px rgba(48, 86, 211, 0.12)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 3px 10px rgba(0,0,0,0.06)'">💰 Investments</button>
-             <button onclick="quickQuestion('Explain my spending patterns')" class="quick-action-btn" style="background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%); border: 1px solid rgba(48, 86, 211, 0.1); padding: 0.75rem 1.25rem; border-radius: 25px; cursor: pointer; font-size: 0.9rem; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); font-weight: 500; color: #333; box-shadow: 0 3px 10px rgba(0,0,0,0.06);" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 5px 15px rgba(48, 86, 211, 0.12)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 3px 10px rgba(0,0,0,0.06)'">📊 Analysis</button>
-           </div>
-         </div>
-       </div>
+      <!-- Goals Section -->
+      <div id="goals" class="dashboard-section" style="display: none;">
+        <div class="dashboard-grid">
+          <!-- Savings Goal Card -->
+          <div class="dashboard-card">
+            <div class="card-header">
+              <h3 class="card-title">
+                <i class="lni lni-piggy-bank" style="color: #4caf50; margin-right: 0.5rem;"></i>
+                Savings Goals
+              </h3>
+            </div>
+            <div class="goal-item">
+              <div class="goal-icon">
+                <i class="lni lni-target"></i>
+              </div>
+              <div class="goal-info">
+                <div class="goal-name">Vacation Fund</div>
+                <div class="goal-amount">€5,000</div>
+                <div class="goal-progress">
+                  <div class="progress-bar" style="width: 60%;"></div>
+                  <div class="progress-label">60% of goal</div>
+                </div>
+              </div>
+            </div>
+            <div class="goal-item">
+              <div class="goal-icon">
+                <i class="lni lni-home"></i>
+              </div>
+              <div class="goal-info">
+                <div class="goal-name">Home Renovation</div>
+                <div class="goal-amount">€10,000</div>
+                <div class="goal-progress">
+                  <div class="progress-bar" style="width: 30%;"></div>
+                  <div class="progress-label">30% of goal</div>
+                </div>
+              </div>
+            </div>
+            <div class="goal-item">
+              <div class="goal-icon">
+                <i class="lni lni-credit-cards"></i>
+              </div>
+              <div class="goal-info">
+                <div class="goal-name">Emergency Fund</div>
+                <div class="goal-amount">€3,000</div>
+                <div class="goal-progress">
+                  <div class="progress-bar" style="width: 75%;"></div>
+                  <div class="progress-label">75% of goal</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
 
-       <!-- Settings Section -->
-       <div id="settings" class="dashboard-section" style="display: none;">
+      <!-- AI Chat Section -->
+      <div id="ai-chat" class="dashboard-section" style="display: none;">
+        <div class="dashboard-grid" style="display: flex; flex-direction: column; height: calc(100vh - 8rem); gap: 1rem; padding: 1rem;">
+          
+          <!-- Chat Header -->
+          <div class="chat-header" style="background: white; border-radius: 15px; padding: 1rem; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08); display: flex; align-items: center; gap: 0.8rem; border: 1px solid rgba(0, 0, 0, 0.1); margin-top: -0.5rem;">
+            <!-- AI Avatar -->
+            <div class="ai-avatar" style="width: 45px; height: 45px; border-radius: 50%; overflow: hidden; flex-shrink: 0; border: 2px solid #13c296;">
+              <img src="assets/images/team/team-01.png" alt="AI Assistant" style="width: 100%; height: 100%; object-fit: cover;">
+            </div>
+            <div class="ai-info" style="display: flex; align-items: center; gap: 1rem;">
+              <h3 style="color: #212b36; margin: 0; font-size: 1.2rem; font-weight: 600;">AI Assistant</h3>
+              <div class="status-ticker" style="display: flex; align-items: center; gap: 0.5rem; margin: 0;">
+                <div class="status-dot" style="width: 8px; height: 8px; border-radius: 50%; background: #13c296; animation: statusPulse 2s infinite;"></div>
+                <p style="color: #637381; margin: 0; font-size: 0.85rem; font-weight: 500;">Online • Ready to help</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Chat Messages Area -->
+          <div class="chat-messages" style="flex: 1; background: #f8f9fa; border-radius: 20px; padding: 1.5rem; overflow-y: auto; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1); border: 1px solid rgba(0, 0, 0, 0.1); display: flex; flex-direction: column; gap: 1rem;">
+            
+            <!-- Welcome Message -->
+            <div class="message ai-message" style="display: flex; gap: 0.8rem; align-items: flex-start; animation: messageSlideIn 0.5s ease-out;">
+              <div class="message-avatar" style="width: 35px; height: 35px; border-radius: 50%; overflow: hidden; flex-shrink: 0; border: 2px solid #13c296;">
+                <img src="assets/images/team/team-01.png" alt="AI Assistant" style="width: 100%; height: 100%; object-fit: cover;">
+              </div>
+              <div class="message-content" style="background: white; padding: 1rem 1.2rem; border-radius: 18px; border-bottom-left-radius: 5px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); max-width: 80%; position: relative;">
+                <p style="margin: 0; color: #333; font-size: 0.95rem; line-height: 1.4;">👋 Hi! I'm your AI assistant. How can I help you today? I can assist with banking queries, account management, or any financial questions you might have.</p>
+                <div class="message-time" style="font-size: 0.75rem; color: #999; margin-top: 0.5rem; text-align: right;">12:30 PM</div>
+              </div>
+            </div>
+
+            <!-- User Message Example -->
+            <div class="message user-message" style="display: flex; gap: 0.8rem; align-items: flex-start; justify-content: flex-end; animation: messageSlideIn 0.5s ease-out;">
+              <div class="message-content" style="background: #f0f2f5; color: #212b36; padding: 1rem 1.2rem; border-radius: 18px; border-bottom-right-radius: 5px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); max-width: 80%; position: relative;">
+                <p style="margin: 0; font-size: 0.95rem; line-height: 1.4;">Can you help me check my account balance?</p>
+                <div class="message-time" style="font-size: 0.75rem; color: #637381; margin-top: 0.5rem; text-align: right;">12:32 PM</div>
+              </div>
+              <div class="message-avatar" style="width: 35px; height: 35px; border-radius: 50%; background: #637381; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                <i class="lni lni-user" style="color: white; font-size: 16px;"></i>
+              </div>
+            </div>
+
+            <!-- AI Response Example -->
+            <div class="message ai-message" style="display: flex; gap: 0.8rem; align-items: flex-start; animation: messageSlideIn 0.5s ease-out;">
+              <div class="message-avatar" style="width: 35px; height: 35px; border-radius: 50%; overflow: hidden; flex-shrink: 0; border: 2px solid #13c296;">
+                <img src="assets/images/team/team-01.png" alt="AI Assistant" style="width: 100%; height: 100%; object-fit: cover;">
+              </div>
+              <div class="message-content" style="background: white; padding: 1rem 1.2rem; border-radius: 18px; border-bottom-left-radius: 5px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); max-width: 80%; position: relative;">
+                <p style="margin: 0; color: #333; font-size: 0.95rem; line-height: 1.4;">Of course! I can help you check your account balance. Which account would you like to check? I can see you have multiple accounts connected.</p>
+                <div class="message-time" style="font-size: 0.75rem; color: #999; margin-top: 0.5rem; text-align: right;">12:33 PM</div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Chat Input Area -->
+          <div class="chat-input-area" style="background: white; border-radius: 25px; padding: 1rem 1.5rem; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1); border: 1px solid rgba(0, 0, 0, 0.1); display: flex; align-items: center; gap: 1rem;">
+            
+            <!-- Message Input -->
+            <div class="message-input-container" style="flex: 1; position: relative;">
+              <textarea id="messageInput" placeholder="Type a message..." style="width: 100%; border: none; outline: none; resize: none; padding: 0.8rem 1rem; border-radius: 20px; background: #f8f9fa; font-size: 0.95rem; line-height: 1.4; min-height: 45px; max-height: 120px; transition: all 0.3s ease; font-family: inherit;"></textarea>
+            </div>
+
+            <!-- Send Button -->
+            <button id="sendButton" class="send-btn" style="width: 45px; height: 45px; border-radius: 50%; background: linear-gradient(135deg, #3056d3, #13c296); border: none; color: white; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(48, 86, 211, 0.3); position: relative; overflow: hidden;">
+              <i class="lni lni-arrow-right" style="font-size: 18px; transition: transform 0.3s ease;"></i>
+            </button>
+
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Settings Section -->
+      <div id="settings" class="dashboard-section" style="display: none;">
         <div class="settings-section">
           <div class="tab-buttons">
             <button class="tab-button active" onclick="showTab('profile')">
@@ -4825,29 +5671,182 @@
           `;
         }
       }
+
+      // Instagram Style Chat Functions
+      function sendInstagramMessage() {
+        const messageInput = document.getElementById('messageInput');
+        const message = messageInput.value.trim();
+        
+        if (message) {
+          addInstagramUserMessage(message);
+          messageInput.value = '';
+          messageInput.style.height = 'auto';
+          
+          // Show typing indicator
+          showTypingIndicator();
+          
+          // Simulate AI response
+          setTimeout(() => {
+            hideTypingIndicator();
+            addInstagramAIResponse(getAIResponse(message));
+          }, 1500);
+        }
+      }
+
+      function addInstagramUserMessage(message) {
+        const chatMessages = document.querySelector('.chat-messages');
+        const messageDiv = document.createElement('div');
+        messageDiv.className = 'message user-message';
+        messageDiv.style.cssText = 'display: flex; gap: 0.8rem; align-items: flex-start; justify-content: flex-end; animation: messageSlideIn 0.5s ease-out;';
+        
+        const currentTime = new Date().toLocaleTimeString('en-US', { 
+          hour: 'numeric', 
+          minute: '2-digit',
+          hour12: true 
+        });
+        
+        messageDiv.innerHTML = `
+          <div class="message-content" style="background: #f0f2f5; color: #212b36; padding: 1rem 1.2rem; border-radius: 18px; border-bottom-right-radius: 5px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); max-width: 80%; position: relative;">
+            <p style="margin: 0; font-size: 0.95rem; line-height: 1.4;">${message}</p>
+            <div class="message-time" style="font-size: 0.75rem; color: #637381; margin-top: 0.5rem; text-align: right;">${currentTime}</div>
+          </div>
+          <div class="message-avatar" style="width: 35px; height: 35px; border-radius: 50%; background: linear-gradient(135deg, #3056d3, #13c296); display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; flex-shrink: 0; box-shadow: 0 4px 15px rgba(48, 86, 211, 0.3);">
+            JD
+          </div>
+        `;
+        
+        chatMessages.appendChild(messageDiv);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+      }
+
+      function addInstagramAIResponse(response) {
+        const chatMessages = document.querySelector('.chat-messages');
+        const messageDiv = document.createElement('div');
+        messageDiv.className = 'message ai-message';
+        messageDiv.style.cssText = 'display: flex; gap: 0.8rem; align-items: flex-start; animation: messageSlideIn 0.5s ease-out;';
+        
+        const currentTime = new Date().toLocaleTimeString('en-US', { 
+          hour: 'numeric', 
+          minute: '2-digit',
+          hour12: true 
+        });
+        
+        messageDiv.innerHTML = `
+          <div class="message-avatar" style="width: 35px; height: 35px; border-radius: 50%; overflow: hidden; flex-shrink: 0; border: 2px solid #13c296;">
+            <img src="assets/images/team/team-01.png" alt="AI Assistant" style="width: 100%; height: 100%; object-fit: cover;">
+          </div>
+          <div class="message-content" style="background: white; padding: 1rem 1.2rem; border-radius: 18px; border-bottom-left-radius: 5px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); max-width: 80%; position: relative;">
+            ${response}
+            <div class="message-time" style="font-size: 0.75rem; color: #999; margin-top: 0.5rem; text-align: right;">${currentTime}</div>
+          </div>
+        `;
+        
+        chatMessages.appendChild(messageDiv);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+      }
+
+      function showTypingIndicator() {
+        const chatMessages = document.querySelector('.chat-messages');
+        const typingDiv = document.createElement('div');
+        typingDiv.className = 'message ai-message typing-indicator-container';
+        typingDiv.style.cssText = 'display: flex; gap: 0.8rem; align-items: flex-start; animation: messageSlideIn 0.5s ease-out;';
+        
+        typingDiv.innerHTML = `
+          <div class="message-avatar" style="width: 35px; height: 35px; border-radius: 50%; overflow: hidden; flex-shrink: 0; border: 2px solid #13c296;">
+            <img src="assets/images/team/team-01.png" alt="AI Assistant" style="width: 100%; height: 100%; object-fit: cover;">
+          </div>
+          <div class="typing-indicator">
+            <div class="typing-dot"></div>
+            <div class="typing-dot"></div>
+            <div class="typing-dot"></div>
+          </div>
+        `;
+        
+        chatMessages.appendChild(typingDiv);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+      }
+
+      function hideTypingIndicator() {
+        const typingIndicator = document.querySelector('.typing-indicator-container');
+        if (typingIndicator) {
+          typingIndicator.remove();
+        }
+      }
+
+      function handleInstagramKeyPress(event) {
+        if (event.key === 'Enter' && !event.shiftKey) {
+          event.preventDefault();
+          sendInstagramMessage();
+        }
+      }
+
+      function autoResizeTextarea() {
+        const textarea = document.getElementById('messageInput');
+        textarea.style.height = 'auto';
+        textarea.style.height = Math.min(textarea.scrollHeight, 120) + 'px';
+      }
+
+      // Initialize Instagram chat functionality
+      document.addEventListener('DOMContentLoaded', function() {
+        const messageInput = document.getElementById('messageInput');
+        const sendButton = document.getElementById('sendButton');
+        
+        if (messageInput) {
+          messageInput.addEventListener('input', autoResizeTextarea);
+          messageInput.addEventListener('keypress', handleInstagramKeyPress);
+        }
+        
+        if (sendButton) {
+          sendButton.addEventListener('click', sendInstagramMessage);
+        }
+      });
       
       // Manage mode and delete functionality
       let isManageMode = false;
       
-                     function toggleManageMode() {
-                 isManageMode = !isManageMode;
-                 const manageBtn = document.getElementById('manage-btn');
-                 const banksContainer = document.querySelector('#banks .dashboard-card');
-                 
-                 if (isManageMode) {
-                   // Enter manage mode
-                   manageBtn.textContent = 'Done';
-                   manageBtn.classList.add('manage-active');
-                   banksContainer.classList.add('manage-mode');
-                   showNotification('Manage mode activated. Click the red delete buttons to remove banks.');
-                 } else {
-                   // Exit manage mode
-                   manageBtn.textContent = 'Manage';
-                   manageBtn.classList.remove('manage-active');
-                   banksContainer.classList.remove('manage-mode');
-                   showNotification('Manage mode deactivated.');
-                 }
-               }
+                           function toggleManageMode() {
+        isManageMode = !isManageMode;
+        const manageBtn = document.getElementById('manage-btn');
+        const banksContainer = document.querySelector('#banks .dashboard-card');
+        const deleteButtons = document.querySelectorAll('#banks .delete-bank-btn');
+        const selectionIndicators = document.querySelectorAll('#banks .bank-selection-indicator');
+        
+        if (isManageMode) {
+          // Enter manage mode
+          manageBtn.textContent = 'Done';
+          manageBtn.classList.add('manage-active');
+          banksContainer.classList.add('manage-mode');
+          
+          // Show delete buttons and hide selection indicators
+          deleteButtons.forEach(btn => {
+            btn.style.opacity = '1';
+            btn.style.transform = 'scale(1)';
+          });
+          
+          selectionIndicators.forEach(indicator => {
+            indicator.style.display = 'none';
+          });
+          
+          // Removed notification for professional experience
+        } else {
+          // Exit manage mode
+          manageBtn.textContent = 'Manage';
+          manageBtn.classList.remove('manage-active');
+          banksContainer.classList.remove('manage-mode');
+          
+          // Hide delete buttons and show selection indicators
+          deleteButtons.forEach(btn => {
+            btn.style.opacity = '0';
+            btn.style.transform = 'scale(0)';
+          });
+          
+          selectionIndicators.forEach(indicator => {
+            indicator.style.display = 'flex';
+          });
+          
+          // Removed notification for professional experience
+        }
+      }
       
       function deleteBank(bankId, event) {
         // Prevent event bubbling to avoid triggering bank selection
@@ -4856,12 +5855,78 @@
         const bankName = bankData[bankId].name;
         const bankElement = document.getElementById(`bank-${bankId}`);
         
-        // Show confirmation dialog
-        if (confirm(`Are you sure you want to delete ${bankName}? This action cannot be undone.`)) {
-          // Add fade out animation
-          bankElement.style.transition = 'all 0.3s ease';
+        // Create professional confirmation modal instead of browser confirm
+        const modal = document.createElement('div');
+        modal.style.cssText = `
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background: rgba(0, 0, 0, 0.5);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          z-index: 10001;
+          opacity: 0;
+          transition: opacity 0.3s ease;
+        `;
+        
+        const modalContent = document.createElement('div');
+        modalContent.style.cssText = `
+          background: white;
+          padding: 2rem;
+          border-radius: 20px;
+          max-width: 400px;
+          width: 90%;
+          text-align: center;
+          box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+          transform: scale(0.9);
+          transition: transform 0.3s ease;
+        `;
+        
+        modalContent.innerHTML = `
+          <div style="width: 80px; height: 80px; background: linear-gradient(135deg, #ef4444, #dc2626); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem;">
+            <i class="lni lni-trash-can" style="color: white; font-size: 2rem;"></i>
+          </div>
+          <h3 style="color: #2d3748; margin-bottom: 1rem; font-size: 1.5rem; font-weight: 700;">Delete Bank Account</h3>
+          <p style="color: #718096; margin-bottom: 2rem; line-height: 1.6;">Are you sure you want to remove <strong>${bankName}</strong> from your connected banks? This action cannot be undone.</p>
+          <div style="display: flex; gap: 1rem; justify-content: center;">
+            <button id="cancel-delete" style="background: #f8f9fa; color: #718096; border: 1px solid #e2e8f0; padding: 0.875rem 1.5rem; border-radius: 12px; font-weight: 600; cursor: pointer; transition: all 0.3s ease; position: relative; overflow: hidden;">Cancel</button>
+            <button id="confirm-delete" style="background: linear-gradient(135deg, #ef4444, #dc2626); color: white; border: none; padding: 0.875rem 1.5rem; border-radius: 12px; font-weight: 600; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 6px 20px rgba(239, 68, 68, 0.25); position: relative; overflow: hidden;">Delete Account</button>
+          </div>
+        `;
+        
+        modal.appendChild(modalContent);
+        document.body.appendChild(modal);
+        
+        // Animate modal in
+        setTimeout(() => {
+          modal.style.opacity = '1';
+          modalContent.style.transform = 'scale(1)';
+        }, 10);
+        
+        // Handle cancel
+        document.getElementById('cancel-delete').addEventListener('click', () => {
+          modal.style.opacity = '0';
+          modalContent.style.transform = 'scale(0.9)';
+          setTimeout(() => {
+            document.body.removeChild(modal);
+          }, 300);
+        });
+        
+        // Handle confirm delete
+        document.getElementById('confirm-delete').addEventListener('click', () => {
+          // Add loading state to button
+          const confirmBtn = document.getElementById('confirm-delete');
+          confirmBtn.textContent = 'Deleting...';
+          confirmBtn.style.opacity = '0.7';
+          confirmBtn.disabled = true;
+          
+          // Add fade out animation to bank element
+          bankElement.style.transition = 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)';
           bankElement.style.opacity = '0';
-          bankElement.style.transform = 'translateX(-100%)';
+          bankElement.style.transform = 'translateX(-100%) scale(0.95)';
           
           setTimeout(() => {
             // Remove the bank element
@@ -4881,14 +5946,30 @@
               }
             }
             
-            showNotification(`${bankName} has been removed from your connected banks.`);
+            // Close modal
+            modal.style.opacity = '0';
+            modalContent.style.transform = 'scale(0.9)';
+            setTimeout(() => {
+              document.body.removeChild(modal);
+            }, 300);
             
             // Check if no banks are left
             if (Object.keys(bankData).length === 0) {
               showEmptyState();
             }
-          }, 300);
-        }
+          }, 400);
+        });
+        
+        // Close modal on background click
+        modal.addEventListener('click', (e) => {
+          if (e.target === modal) {
+            modal.style.opacity = '0';
+            modalContent.style.transform = 'scale(0.9)';
+            setTimeout(() => {
+              document.body.removeChild(modal);
+            }, 300);
+          }
+        });
       }
       
       function showEmptyState() {
